@@ -1,24 +1,21 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import * as React from 'react';
+import { SafeAreaView, Text, StyleSheet } from 'react-native';
+import { Header } from '../../Components';
+import styles from '../../styles';
 
-const PaymentScreen = () => {
+const PaymentScreen: React.FC = () => {
   return (
-    <View style={S.container}>
-      <Text style={S.text}> Payment Screen! </Text>
-    </View>
+    <SafeAreaView style={S.container}>
+      <Header />
+      <Text style={styles.screenTitle}> Top Up </Text>  
+    </SafeAreaView>
   );
-};
+}
 
 export default PaymentScreen;
 
 const S = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1D1F29',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    color: 'white'
   }
 });

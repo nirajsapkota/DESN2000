@@ -1,24 +1,21 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import * as React from 'react';
+import { SafeAreaView, Text, StyleSheet } from 'react-native';
+import { Header } from '../../Components';
+import styles from '../../styles';
 
-const TripScreen = () => {
+const TripScreen: React.FC = () => {
   return (
-    <View style={S.container}>
-      <Text style={S.text}> Trip Screen! </Text>
-    </View>
+    <SafeAreaView style={S.container}>
+      <Header />
+      <Text style={styles.screenTitle}> Trips </Text>  
+    </SafeAreaView>
   );
-};
+}
 
 export default TripScreen;
 
 const S = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1D1F29',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    color: 'white'
   }
 });

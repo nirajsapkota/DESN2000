@@ -1,8 +1,15 @@
+/* React and 3rd Party Imports */
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Feather, AntDesign, Ionicons } from '@expo/vector-icons';
 
+/* Component Imports */
+import { 
+  Neumorphic
+} from '../Components';
+
+/* Screen Imports */
 import {
   HomeScreen,
   TripScreen,
@@ -14,45 +21,42 @@ const Tab = createBottomTabNavigator();
 const Navigation = () => {
   return (
     <Tab.Navigator 
-    
+
+      /* Customise the look of each navigation tab */
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {         
 
-          let iconColor = focused ? '#FF8533' : '#8C94A4';
+          let iconColor = focused ? '#00A7E7' : '#8C94A4';
           
           if (route.name === "Home") {
             return (
-              <View style={ focused ? S.active : S.inactive }>
+              <Neumorphic size={60}>
                 <Ionicons name="ios-home" size={32} color={iconColor} />
-                <Text style={S.text}> Home </Text>
-              </View>
+              </Neumorphic>
             );
           }
           
           else if (route.name === "Trips") {
             return (
-              <View style={ focused ? S.active : S.inactive }>
+              <Neumorphic size={60}>
                 <Feather name="map" size={32} color={iconColor} />
-                <Text style={S.text}> Trips </Text>
-              </View>
+              </Neumorphic>
             );
           }
           
           else if (route.name === "Activity") {
             return (
-              <View style={ focused ? S.active : S.inactive }>
+              <Neumorphic size={60}>
                 <AntDesign name="barschart" size={32} color={iconColor} />
-                <Text style={S.text}> Activity </Text>
-              </View>
+              </Neumorphic>
             );
           }
           
           else {
             return (
-              <View style={ focused ? S.active : S.inactive }>
-                <AntDesign name="creditcard" size={32} color={iconColor} />
-                <Text style={S.text}> Top Up </Text>
-              </View>
+              <Neumorphic size={60}>
+               <AntDesign name="creditcard" size={32} color={iconColor} />
+              </Neumorphic>
             );
           }
           
@@ -60,47 +64,24 @@ const Navigation = () => {
       })}
 
       tabBarOptions={{
+        /* Set the background color and increase chin size */
         style: {
-          backgroundColor: '#1D1F29',
-          borderTopColor: 'transparent',
-          paddingBottom: 60,
+          backgroundColor: '#F2F3F7',
+          height: 120
         },
-        activeTintColor: '#8C94A4',
-        inactiveTintColor: '#8C94A4',
+        
+        /* Hide Labels */
         showLabel: false,
-      }}
-    
-    >
+      }} >
 
+      { /* Navigation Tabs */ }
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Trips" component={TripScreen} />
       <Tab.Screen name="Activity" component={ActivityScreen} />
       <Tab.Screen name="Payments" component={PaymentScreen} />
+
     </Tab.Navigator>
   );
 }
 
 export default Navigation;
-
-const S = StyleSheet.create({
-  active: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 72,
-    height: 72,
-    backgroundColor: '#292E41',
-    borderRadius: 36,
-    marginHorizontal: 15,
-  },
-  inactive: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 64,
-    height: 64,
-    marginHorizontal: 15,
-  },
-  text: {
-    color: '#8C94A4',
-    fontSize: 12,
-  },
-});
