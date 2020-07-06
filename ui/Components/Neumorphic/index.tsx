@@ -7,17 +7,18 @@ const SHADOW = '#BECDE2';
 const RADIUS = 10;
 
 interface NeumorphicProps {
-  size: number,
+  width: number,
+  height: number,
   style?: Object,
-  children: Object
+  children?: Object
 }
 
-const Neumorphic: React.FC<NeumorphicProps> = ({ size, style, children }) => {
+const Neumorphic: React.FC<NeumorphicProps> = ({ width, height, style, children }) => {
   
   const M = StyleSheet.create({
     default: {
-      width: size,
-      height: size,
+      width: width,
+      height: height,
       borderRadius: 15,
       justifyContent: 'center',
       alignItems: 'center',

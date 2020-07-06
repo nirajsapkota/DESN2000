@@ -5,7 +5,7 @@ import styles from '../../styles';
 
 const TripScreen: React.FC = () => {
   return (
-    <SafeAreaView style={S.container}>
+    <SafeAreaView style={styles.container}>
       <Header />
       <Text style={styles.screenTitle}> Trips </Text>  
     </SafeAreaView>
@@ -15,7 +15,4 @@ const TripScreen: React.FC = () => {
 export default TripScreen;
 
 const S = StyleSheet.create({
-  container: {
-    flex: 1,
-  }
 });

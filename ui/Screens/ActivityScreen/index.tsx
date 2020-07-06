@@ -5,7 +5,7 @@ import styles from '../../styles';
 
 const ActivityScreen: React.FC = () => {
   return (
-    <SafeAreaView style={S.container}>
+    <SafeAreaView style={styles.container}>
       <Header />
       <Text style={styles.screenTitle}> Activity </Text>  
     </SafeAreaView>
@@ -15,7 +15,4 @@ const ActivityScreen: React.FC = () => {
 export default ActivityScreen;
 
 const S = StyleSheet.create({
-  container: {
-    flex: 1,
-  }
 });

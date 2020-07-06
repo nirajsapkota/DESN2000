@@ -1,6 +1,5 @@
 /* React and 3rd Party Imports */
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Feather, AntDesign, Ionicons } from '@expo/vector-icons';
 
@@ -20,7 +19,7 @@ import {
 const Tab = createBottomTabNavigator();
 const Navigation = () => {
   return (
-    <Tab.Navigator 
+    <Tab.Navigator
 
       /* Customise the look of each navigation tab */
       screenOptions={({ route }) => ({
@@ -30,7 +29,7 @@ const Navigation = () => {
           
           if (route.name === "Home") {
             return (
-              <Neumorphic size={60}>
+              <Neumorphic width={60} height={60}>
                 <Ionicons name="ios-home" size={32} color={iconColor} />
               </Neumorphic>
             );
@@ -38,7 +37,7 @@ const Navigation = () => {
           
           else if (route.name === "Trips") {
             return (
-              <Neumorphic size={60}>
+              <Neumorphic width={60} height={60}>
                 <Feather name="map" size={32} color={iconColor} />
               </Neumorphic>
             );
@@ -46,7 +45,7 @@ const Navigation = () => {
           
           else if (route.name === "Activity") {
             return (
-              <Neumorphic size={60}>
+              <Neumorphic width={60} height={60}>
                 <AntDesign name="barschart" size={32} color={iconColor} />
               </Neumorphic>
             );
@@ -54,7 +53,7 @@ const Navigation = () => {
           
           else {
             return (
-              <Neumorphic size={60}>
+              <Neumorphic width={60} height={60}>
                <AntDesign name="creditcard" size={32} color={iconColor} />
               </Neumorphic>
             );
