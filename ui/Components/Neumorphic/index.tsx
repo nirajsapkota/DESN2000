@@ -1,25 +1,60 @@
-import * as React from 'react';
-import color from 'color';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
-
-const BACKGROUND = '#F2F3F7';
-const SHADOW = '#BECDE2';
-const RADIUS = 10;
+import color from 'color';
 
 interface NeumorphicProps {
   width: number,
   height: number,
+  background: string,
+  radius: number,
+  pressed?: boolean,
   style?: Object,
   children?: Object
 }
 
-const Neumorphic: React.FC<NeumorphicProps> = ({ width, height, style, children }) => {
+const Neumorphic: React.FC<NeumorphicProps> = ({ width, height, background,
+  radius, pressed, style, children }) => {
   
+  const S = StyleSheet.create({
+    morph: {
+      borderRadius: radius,
+      borderWidth: 1,
+      backgroundColor: background,
+      borderColor: color(background)
+        .lighten(0.5)
+        .alpha(0.2).toString(),
+    },
+    morphTop: {
+      borderRadius: radius,
+      shadowOffset: {
+        width: -6,
+        height: -6,
+      },
+      shadowOpacity: 1,
+      shadowRadius: 6,
+      shadowColor: color("#FFFFFF")
+        .lighten(0.15)
+        .alpha(1).toString(),
+    },
+    morphBottom: {
+      borderRadius: radius,
+      shadowOffset: {
+        width: 6,
+        height: 6,
+      },
+      shadowOpacity: 1,
+      shadowRadius: 6,
+      shadowColor: color(background)
+        .darken(0.3)
+        .alpha(0.5).toString(),
+    },
+  });
+
   const M = StyleSheet.create({
     default: {
       width: width,
       height: height,
-      borderRadius: 15,
+      borderRadius: radius,
       justifyContent: 'center',
       alignItems: 'center',
       marginHorizontal: 15,
@@ -54,38 +89,3 @@ const Neumorphic: React.FC<NeumorphicProps> = ({ width, height, style, children 
 };
 
 export default Neumorphic;
-
-const S = StyleSheet.create({
-  morph: {
-    borderRadius: RADIUS,
-    borderWidth: 1,
-    backgroundColor: BACKGROUND,
-    borderColor: color(BACKGROUND)
-      .lighten(0.5)
-      .alpha(0.2).toString(),
-  },
-  morphTop: {
-    borderRadius: RADIUS,
-    shadowOffset: {
-      width: -6,
-      height: -6,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 6,
-    shadowColor: color(SHADOW)
-      .lighten(0.15)
-      .alpha(1).toString(),
-  },
-  morphBottom: {
-    borderRadius: RADIUS,
-    shadowOffset: {
-      width: 6,
-      height: 6,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 6,
-    shadowColor: color(SHADOW)
-      .darken(0.3)
-      .alpha(0.5).toString(),
-  },
-});

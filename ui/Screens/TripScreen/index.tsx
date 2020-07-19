@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { SafeAreaView, Text, StyleSheet } from 'react-native';
 import { Header } from '../../Components';
-import styles from '../../styles';
+import STYLES from '../../styles';
 
 const TripScreen: React.FC = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView>
       <Header />
-      <Text style={styles.screenTitle}> Trips </Text>  
+      
+      <Text style={STYLES.title}> Trips </Text>
     </SafeAreaView>
   );
 }

@@ -20,13 +20,6 @@ const PaymentMethodSelect: React.FC = () => {
           <Text> **** 6942 </Text>
         </View>
       </Neumorphic>
-      <Neumorphic width={350} height={60} style={{marginTop: 10}} >
-        <View style={S.container}>
-          <FontAwesome name="paypal" size={48} color="#039BE5" />
-          <Text style={S.boldText}> Paypal </Text>
-          <Text> *****js21@gmail.com </Text>
-        </View>
-      </Neumorphic>
     </View>
   );
 };
