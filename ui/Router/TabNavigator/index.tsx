@@ -14,7 +14,8 @@ import {
   HomeScreen,
   TripScreen,
   ActivityScreen,
-  PaymentScreen
+  PaymentScreen,
+  AccessibilityEmergencyScreen
 } from '../../Screens';
 
 const Tab = createBottomTabNavigator();
@@ -30,7 +31,7 @@ const TabNavigator = () => {
           
           if (route.name === "Home") {
             return (
-              <Neumorphic width={60} height={60} background={COLORS.PRIMARY} radius={15}>
+              <Neumorphic width={60} height={60} background={COLORS.PRIMARY} radius={15} centered>
                 <Ionicons name="ios-home" size={32} color={iconColor} />
               </Neumorphic>
             );
@@ -38,7 +39,7 @@ const TabNavigator = () => {
           
           else if (route.name === "Trips") {
             return (
-              <Neumorphic width={60} height={60} background={COLORS.PRIMARY} radius={15}>
+              <Neumorphic width={60} height={60} background={COLORS.PRIMARY} radius={15} centered>
                 <Feather name="map" size={32} color={iconColor} />
               </Neumorphic>
             );
@@ -46,7 +47,7 @@ const TabNavigator = () => {
           
           else if (route.name === "Activity") {
             return (
-              <Neumorphic width={60} height={60} background={COLORS.PRIMARY} radius={15}>
+              <Neumorphic width={60} height={60} background={COLORS.PRIMARY} radius={15} centered>
                 <AntDesign name="barschart" size={32} color={iconColor} />
               </Neumorphic>
             );
@@ -54,7 +55,7 @@ const TabNavigator = () => {
           
           else {
             return (
-              <Neumorphic width={60} height={60} background={COLORS.PRIMARY} radius={15}>
+              <Neumorphic width={60} height={60} background={COLORS.PRIMARY} radius={15} centered>
                <AntDesign name="creditcard" size={32} color={iconColor} />
               </Neumorphic>
             );

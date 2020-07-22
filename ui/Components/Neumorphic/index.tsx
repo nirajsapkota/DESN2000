@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import color from 'color';
 
@@ -7,13 +7,14 @@ interface NeumorphicProps {
   height: number,
   background: string,
   radius: number,
+  centered?: boolean,
   pressed?: boolean,
   style?: Object,
   children?: Object
 }
 
-const Neumorphic: React.FC<NeumorphicProps> = ({ width, height, background,
-  radius, pressed, style, children }) => {
+const Neumorphic: FC<NeumorphicProps> = ({ width, height, background,
+  radius, pressed, centered, style, children }) => {
   
   const S = StyleSheet.create({
     morph: {
@@ -56,8 +57,7 @@ const Neumorphic: React.FC<NeumorphicProps> = ({ width, height, background,
       height: height,
       borderRadius: radius,
       justifyContent: 'center',
-      alignItems: 'center',
-      marginHorizontal: 15,
+      alignItems: centered ? "center" : "stretch",
       borderWidth: 0
     }
   });

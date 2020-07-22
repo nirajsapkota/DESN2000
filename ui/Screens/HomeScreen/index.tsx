@@ -1,14 +1,32 @@
-import * as React from 'react';
-import { SafeAreaView, Text, StyleSheet } from 'react-native';
-import { Header } from '../../Components';
+import React, { FC } from 'react';
+import { SafeAreaView, ScrollView, Text, StyleSheet } from 'react-native';
+import { Header, OpalCardSelector, Trips, News } from '../../Components';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 import STYLES from '../../styles';
 
-const HomeScreen: React.FC = () => {
+interface HomeScreenProps {
+  navigation: DrawerNavigationProp<any, any>
+};
+
+const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
   return (
     <SafeAreaView>
-      <Header />
+      <Header navigation={navigation} />
 
-      <Text style={STYLES.title}> Home </Text>
+      <ScrollView contentContainerStyle={STYLES.container}>
+        
+        <Text style={STYLES.title}> Home </Text>
+        <Text style={[STYLES.subtitle, {marginTop: 15}]}> Your cards </Text>
+        <OpalCardSelector />
+
+        <Text style={[STYLES.subtitle, {marginTop: 15}]}> Pinned trips </Text>
+        <Trips pinned />
+
+        <Text style={[STYLES.subtitle, {marginTop: 15}]}> News </Text>
+        <News preview />
+
+      </ScrollView>
+   
     </SafeAreaView>
   );
 }

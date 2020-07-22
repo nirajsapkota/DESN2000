@@ -1,14 +1,24 @@
-import * as React from 'react';
-import { SafeAreaView, Text, StyleSheet } from 'react-native';
+import React, { FC } from 'react';
+import { SafeAreaView, ScrollView, Text, StyleSheet } from 'react-native';
 import { Header } from '../../Components';
 import STYLES from '../../styles';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
-const ActivityScreen: React.FC = () => {
+interface ActivityScreenProps {
+  navigation: DrawerNavigationProp<any, any>
+};
+
+const ActivityScreen: FC<ActivityScreenProps> = ({ navigation }) => {
   return (
     <SafeAreaView>
-      <Header />
+      <Header navigation={navigation} />
 
-      <Text style={STYLES.title}> Activity </Text>
+      <ScrollView contentContainerStyle={STYLES.container}>
+        <Text style={STYLES.title}> Activity </Text>
+        <Text style={[STYLES.subtitle, {marginTop: 15}]}> Travel frequency and spending </Text>
+
+        <Text style={[STYLES.subtitle, {marginTop: 15}]}> Travel history </Text>
+      </ScrollView>
     </SafeAreaView>
   );
 }
