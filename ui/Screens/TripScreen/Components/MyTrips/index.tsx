@@ -1,0 +1,58 @@
+import React, { FC } from 'react';
+
+import { 
+  TouchableOpacity,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+  Text
+} from 'react-native';
+
+import {
+  Neumorphic,
+  Header,
+  Trips
+} from '../../../../Components';
+
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { Ionicons } from '@expo/vector-icons'; 
+
+import * as COLORS from '../../../../Constants/colors';
+import STYLES from '../../../../styles';
+
+interface MyTripsProps {
+  navigation: DrawerNavigationProp<any, any>
+}
+
+const MyTrips: FC<MyTripsProps> = ({ navigation }) => {
+  return (
+    <SafeAreaView>
+      <Header navigation={navigation} />
+      
+      <ScrollView contentContainerStyle={STYLES.container}>
+
+        <View style={[STYLES.row, {alignItems: 'center', justifyContent: 'space-between', width: 355}]}>
+          
+          <Text style={STYLES.title}> Trips </Text>
+          
+          <TouchableOpacity onPress={() => navigation.navigate('Add New Trip From')}>
+            <Neumorphic width={48} height={48} background={COLORS.ACCENT} radius={24} centered>
+              <Ionicons name="ios-add" size={32} color="white" />
+            </Neumorphic>
+          </TouchableOpacity>
+
+        </View>
+
+        <Text style={[STYLES.subtitle, {marginTop: 15}]}> Pinned Trips </Text>
+        <Trips pinned />
+
+        <Text style={[STYLES.subtitle, {marginTop: 15}]}> Trips </Text>
+        <Trips />
+
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+export default MyTrips;

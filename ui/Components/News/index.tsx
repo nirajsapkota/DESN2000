@@ -18,7 +18,7 @@ const NewsPreview: FC = () => {
     <TouchableOpacity>
       <Neumorphic width={335} height={180} background={COLORS.PRIMARY} radius={10}>
         <View style={{ width: 335, height: 125}}>
-          <Image source={require('./covid.png')} style={{flex: 1, borderTopLeftRadius: 10, borderTopRightRadius: 10}} resizeMode='cover' />
+          <Image source={require('./covid.png')} style={{flex: 1, width: 335, borderTopLeftRadius: 10, borderTopRightRadius: 10}} resizeMode='cover' />
         </View>
 
         <View style={{ flexDirection: 'row', alignItems: 'center', height: 55 }}>

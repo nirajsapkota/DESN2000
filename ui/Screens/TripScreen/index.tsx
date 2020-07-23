@@ -1,33 +1,29 @@
 import React, { FC } from 'react';
-import { SafeAreaView, ScrollView, Text, StyleSheet } from 'react-native';
-import { Header, Trips } from '../../Components';
-import STYLES from '../../styles';
+
+import { createStackNavigator } from '@react-navigation/stack';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
+
+import {
+  MyTrips,
+  AddNewTripFrom,
+  AddNewTripTo,
+  AddNewTripConfirm
+} from './Components';
 
 interface TripScreenProps {
   navigation: DrawerNavigationProp<any, any>
 };
 
+const Stack = createStackNavigator();
 const TripScreen: FC<TripScreenProps> = ({ navigation }) => {
   return (
-    <SafeAreaView>
-      <Header navigation={navigation} />
-      
-      <ScrollView contentContainerStyle={STYLES.container}>
-        <Text style={STYLES.title}> Trips </Text>
-
-        <Text style={[STYLES.subtitle, {marginTop: 15}]}> Pinned Trips </Text>
-        <Trips pinned />
-
-        <Text style={[STYLES.subtitle, {marginTop: 15}]}> Trips </Text>
-        <Trips />
-
-      </ScrollView>
-    </SafeAreaView>
+    <Stack.Navigator>
+      <Stack.Screen name="My Trips" component={MyTrips} />
+      <Stack.Screen name="Add New Trip From" component={AddNewTripFrom} />
+      <Stack.Screen name="Add New Trip To" component={AddNewTripTo} />
+      <Stack.Screen name="Add New Trip Confirm" component={AddNewTripConfirm} />
+    </Stack.Navigator>
   );
 }
 
 export default TripScreen;
-
-const S = StyleSheet.create({
-});

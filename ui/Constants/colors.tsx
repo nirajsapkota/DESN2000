@@ -17,6 +17,7 @@ export const L3 = "#781040";
 // Lighter versions of commonly used colours
 export const LIGHT_RED = "#FF6961";
 export const LIGHT_GREEN = "#34C759";
+export const LIGHT_GRAY = "#E9EAED";
 
 // Misc
 export const SLATE_GRAY = "#456078";
