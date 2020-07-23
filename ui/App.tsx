@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { DrawerNavigator } from './Router';
 
-export default function App() {
+const App: FC = () => {
   return (
     <NavigationContainer>
       <StatusBar barStyle="dark-content" />
@@ -11,3 +11,5 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+export default App;

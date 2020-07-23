@@ -55,7 +55,7 @@ const AddNewTripTo: FC<AddNewTripToProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     const results = stops.filter(stop =>
-      stop.name.toLowerCase().includes(query.toLowerCase())
+      stop.name.toLowerCase().includes(query.toLowerCase()) && stop.id != origin.id
     );
     results.sort(compare);
     setQueryResults(results);
