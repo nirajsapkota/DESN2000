@@ -18,6 +18,8 @@ export const L3 = "#781040";
 export const LIGHT_RED = "#FF6961";
 export const LIGHT_GREEN = "#34C759";
 export const LIGHT_GRAY = "#E9EAED";
+export const GRAY2 = "#979BA9";
 
 // Misc
 export const SLATE_GRAY = "#456078";
+export const SLATER_GRAY = "#424B64"

@@ -7,5 +7,5 @@ export {
   MyTrips,
   AddNewTripFrom,
   AddNewTripTo,
-  AddNewTripConfirm,
+  AddNewTripConfirm
 };

@@ -15,7 +15,6 @@ import {
   TripScreen,
   ActivityScreen,
   PaymentScreen,
-  AccessibilityEmergencyScreen
 } from '../../Screens';
 
 const Tab = createBottomTabNavigator();

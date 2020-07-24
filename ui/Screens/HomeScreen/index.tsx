@@ -20,7 +20,7 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
         <OpalCardSelector />
 
         <Text style={[STYLES.subtitle, {marginTop: 15}]}> Pinned trips </Text>
-        <Trips pinned />
+        <Trips navigation={navigation} pinned />
 
         <Text style={[STYLES.subtitle, {marginTop: 15}]}> News </Text>
         <News preview />

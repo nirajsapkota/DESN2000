@@ -7,7 +7,8 @@ import { DisabilityRating } from './Components';
 import STYLES from '../../styles';
 import * as COLORS from '../../Constants/colors';
 
-interface TripProps {
+interface Props {
+  navigation: any,
   pinned?: boolean
 };
 
@@ -22,7 +23,7 @@ const unpinnedTripData = [
   { id: 4, method: "LR", disabilityRating: "GOOD", origin: "Rozelle Bay", destination: "Exhibition Centre"}
 ];
 
-const Trips: FC<TripProps> = ({ pinned }) => {
+const Trips: FC<Props> = ({ navigation, pinned }) => {
   
   var TripData;
   pinned ? TripData = [...pinnedTripData] : TripData = [...unpinnedTripData];
@@ -30,8 +31,21 @@ const Trips: FC<TripProps> = ({ pinned }) => {
   return (
     <View style={{alignItems: 'center'}}>
     { TripData.map(item =>
-      <TouchableOpacity key={item.id} onPress={() => console.log("Loading trip: " + item.id)}>
-        <Neumorphic key={item.id} width={335} height={60} background={COLORS.PRIMARY} radius={10} style={{marginTop: 15}}>
+      <TouchableOpacity
+        key={item.id}
+        onPress={() => navigation.navigate('View Trip Journeys', {
+          origin: item.origin, destination: item.destination
+        })}
+      >
+
+        <Neumorphic
+          width={335}
+          height={60}
+          background={COLORS.PRIMARY}
+          radius={10}
+          style={{marginTop: 15}}
+        >
+
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
 
             <View style={{alignItems: 'center', width: 64}}>
@@ -39,7 +53,11 @@ const Trips: FC<TripProps> = ({ pinned }) => {
             </View>
             
             <View style={{width: 215}}>
-              <Text style={[STYLES.subtitle, {color: 'black', marginBottom: 1}]}> {item.origin} to {item.destination} </Text>
+              <Text 
+                style={[STYLES.subtitle, {color: 'black', marginBottom: 1}]}
+              >
+                {item.origin} to {item.destination}
+              </Text>
               <DisabilityRating rating={item.disabilityRating} />
             </View>
             

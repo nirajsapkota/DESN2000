@@ -22,7 +22,7 @@ import * as COLORS from '../../../../Constants/colors';
 import STYLES from '../../../../styles';
 
 interface MyTripsProps {
-  navigation: DrawerNavigationProp<any, any>
+  navigation: any
 }
 
 const MyTrips: FC<MyTripsProps> = ({ navigation }) => {
@@ -45,10 +45,10 @@ const MyTrips: FC<MyTripsProps> = ({ navigation }) => {
         </View>
 
         <Text style={[STYLES.subtitle, {marginTop: 15}]}> Pinned Trips </Text>
-        <Trips pinned />
+        <Trips navigation={navigation} pinned />
 
         <Text style={[STYLES.subtitle, {marginTop: 15}]}> Trips </Text>
-        <Trips />
+        <Trips navigation={navigation} />
 
       </ScrollView>
     </SafeAreaView>
