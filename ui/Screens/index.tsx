@@ -9,13 +9,7 @@ import TalkToUsScreen from './TalkToUsScreen';
 import SettingsSecurityScreen from './SettingsSecurityScreen';
 
 export {
-  HomeScreen,
-  TripScreen,
-  ActivityScreen,
-  PaymentScreen,
-  DashboardScreen,
-  AccountScreen,
-  AccessibilityEmergencyScreen,
-  TalkToUsScreen,
+  HomeScreen, TripScreen, ActivityScreen, PaymentScreen, DashboardScreen,
+  AccountScreen, AccessibilityEmergencyScreen, TalkToUsScreen,
   SettingsSecurityScreen
 };

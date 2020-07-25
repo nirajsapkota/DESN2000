@@ -1,88 +1,144 @@
 import React, { FC, useState } from 'react';
 
 import {
-  SafeAreaView,
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity
+  TouchableOpacity, SafeAreaView, StyleSheet, Image,
+  View, Text
 } from 'react-native';
 
-import { Neumorphic, Header } from '../../Components';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
+import {
+  Neumorphic, Header
+} from '../../Components';
+
+import {
+  DrawerNavigationProp
+} from '@react-navigation/drawer';
+
 import * as COLORS from '../../Constants/colors';
 import STYLES from '../../styles';
+
+interface NeumorphicAlertProps {
+  children: any,
+  width?: number,
+  height?: number,
+  radius?: number,
+  color?: string
+}
+
+interface NeumorphicImageButtonProps {
+  src: string,
+  size?: number,
+  radius?: number,
+  color?: string,
+  requestHandler: Function,
+  message: string,
+  title: string
+}
 
 interface AccessiblityEmergencyScreenProps {
   navigation: DrawerNavigationProp<any, any>
 };
 
-const AccessiblityEmergencyScreen: FC<AccessiblityEmergencyScreenProps> = ({ navigation }) => {
+const NeumorphicAlert: FC<NeumorphicAlertProps> = 
+  ({children, width, height, radius, color}) => {
+
+  return (
+    <Neumorphic
+      width={width || 335}
+      height={height || 60}
+      radius={radius || 10}
+      background={color || COLORS.ACCENT}
+    >
+      <Text> {children} </Text>
+    </Neumorphic>
+  );
+
+}
+
+const NeumorphicImageButton: FC<NeumorphicImageButtonProps> =
+  ({src, size, radius, color, requestHandler, message, title}) => {
+
+  return (
+    <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
+      <TouchableOpacity
+      style={{marginRight: 10}}
+      onPress={() => {requestHandler(message)}}>
+  
+        <Neumorphic
+          width={size || 64}
+          height={size || 64}
+          radius={radius || 10}
+          background={color || COLORS.PRIMARY}
+          centered>
+          
+          <Image source={require('./boarding.png')} />
+        </Neumorphic>
+      
+      </TouchableOpacity>
+      <Text> {title} </Text>
+    </View>
+  );
+
+}
+
+const AccessiblityEmergencyScreen: FC<AccessiblityEmergencyScreenProps> = ({
+  navigation }) => {
+
   const [helpRequested, setHelpRequested] = useState(false);
   const [helpMessage, setHelpMessage] = useState("");
+
+  function HandleRequest(message: string): void {
+    setHelpRequested(true);
+    setHelpMessage(message);
+  }
 
   return (
     <SafeAreaView>
       <Header navigation={navigation} />
 
       <View style={STYLES.container}>
+        
         <Text style={STYLES.title}> Accessibility and emergency </Text>
-
-        <View style={{alignItems: 'center'}}>
-          <Neumorphic width={335} height={60} radius={10} background={COLORS.LIGHT_RED} style={{marginTop: 20, marginBottom: 20}} centered>
-            <Text style={S.warningText}>
-              Note: improper use can result in a fine upwards of $250.
-            </Text>
-          </Neumorphic>
-        </View>
-          
+        
+        <NeumorphicAlert color={COLORS.LIGHT_RED}>
+          Note: improper use can result in a fine upwards of $250.
+        </NeumorphicAlert>
+        
         <View>
 
-          <View style={[STYLES.row, {alignItems: 'center'}]}>
-            <TouchableOpacity style={{ marginRight: 10}} onPress={() => {setHelpRequested(true); setHelpMessage("boarding assistance")}}>
-              <Neumorphic width={64} height={64} radius={15} background={COLORS.PRIMARY} centered>
-                <Image source={require('./boarding.png')} />
-              </Neumorphic>
-            </TouchableOpacity>
-            <Text style={S.subtitle}> boarding assistance </Text>
-          </View>
+          <NeumorphicImageButton
+            src={'./boarding.png'}
+            requestHandler={HandleRequest}
+            message={'boarding assistance'}
+            title={'boarding assistance'}
+          />
           
-          <View style={[STYLES.row, {alignItems: 'center', marginTop: 20}]}>
-            <TouchableOpacity style={{ marginRight: 10}} onPress={() => {setHelpRequested(true); setHelpMessage("alighting assistance")}}>
-              <Neumorphic width={64} height={64} radius={15} background={COLORS.PRIMARY} centered>
-                <Image source={require('./alighting.png')} />
-              </Neumorphic>
-            </TouchableOpacity>
-            <Text style={S.subtitle}> alighting assistance </Text>
-          </View>
+          <NeumorphicImageButton
+            src={'./alighting.png'}
+            requestHandler={HandleRequest}
+            message={'alighting assistance'}
+            title={'alighting assistance'}
+          />
           
-          <View style={[STYLES.row, {alignItems: 'center', marginTop: 20}]}>
-            <TouchableOpacity style={{ marginRight: 10}} onPress={() => {setHelpRequested(true); setHelpMessage("emergency assistance")}}>
-              <Neumorphic width={64} height={64} radius={15} background={COLORS.PRIMARY} centered>
-                <Image source={require('./ambulance.png')} />
-              </Neumorphic>
-            </TouchableOpacity>
-            <Text style={S.subtitle}> injury or emergency </Text>
-          </View>
+          <NeumorphicImageButton
+            src={'./ambulance.png'}
+            requestHandler={HandleRequest}
+            message={'emergency assistance'}
+            title={'injury or emergency'}
+          />
           
-          <View style={[STYLES.row, {alignItems: 'center', marginTop: 20}]}>
-            <TouchableOpacity style={{ marginRight: 10}} onPress={() => {setHelpRequested(true); setHelpMessage("duress assistance")}}>
-              <Neumorphic width={64} height={64} radius={15} background={COLORS.PRIMARY} centered>
-                <Image source={require('./police.png')} />
-              </Neumorphic>
-            </TouchableOpacity>
-            <Text style={S.subtitle}> duress </Text>
-          </View>
-          
-          <View style={[STYLES.row, {alignItems: 'center', marginTop: 20}]}>
-            <TouchableOpacity style={{ marginRight: 10}} onPress={() => {setHelpRequested(true); setHelpMessage("assistance")}}>
-              <Neumorphic width={64} height={64} radius={15} background={COLORS.PRIMARY} centered>
-                <Image source={require('./other.png')} />
-              </Neumorphic>
-            </TouchableOpacity>
-            <Text style={S.subtitle}> other </Text>
-          </View>
+          <NeumorphicImageButton
+            src={'./police.png'}
+            requestHandler={HandleRequest}
+            message={'duress assistance'}
+            title={'duress'}
+          />
+        
+          <NeumorphicImageButton
+            src={'./other.png'}
+            requestHandler={HandleRequest}
+            message={'assistance'}
+            title={'other'}
+          />
         
           { 
             helpRequested ? 
@@ -90,7 +146,7 @@ const AccessiblityEmergencyScreen: FC<AccessiblityEmergencyScreenProps> = ({ nav
                 <Text style={S.helpText}>
                   You've requested
                   <Text style={S.coloredHelpText}>
-                   {" " + helpMessage}
+                    {" " + helpMessage}
                   </Text>
                   , help is on the way! </Text>
               </View>
@@ -99,6 +155,7 @@ const AccessiblityEmergencyScreen: FC<AccessiblityEmergencyScreenProps> = ({ nav
           }
 
         </View>
+
       </View>
     </SafeAreaView>
   );

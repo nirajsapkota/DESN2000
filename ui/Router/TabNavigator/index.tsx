@@ -4,17 +4,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Feather, AntDesign, Ionicons } from '@expo/vector-icons';
 import * as COLORS from '../../Constants/colors';
 
-/* Component Imports */
 import { 
   Neumorphic
 } from '../../Components';
 
-/* Screen Imports */
 import {
-  HomeScreen,
-  TripScreen,
-  ActivityScreen,
-  PaymentScreen,
+  HomeScreen, TripScreen, ActivityScreen,
+  PaymentScreen
 } from '../../Screens';
 
 const Tab = createBottomTabNavigator();
@@ -30,32 +26,72 @@ const TabNavigator = () => {
           
           if (route.name === "Home") {
             return (
-              <Neumorphic width={60} height={60} background={COLORS.PRIMARY} radius={15} centered>
-                <Ionicons name="ios-home" size={32} color={iconColor} />
+              <Neumorphic
+                width={60}
+                height={60}
+                radius={15}
+                background={COLORS.PRIMARY}
+                centered>
+                
+                <Ionicons
+                  name="ios-home"
+                  size={32}
+                  color={iconColor} />
+              
               </Neumorphic>
             );
           }
           
           else if (route.name === "Trips") {
             return (
-              <Neumorphic width={60} height={60} background={COLORS.PRIMARY} radius={15} centered>
-                <Feather name="map" size={32} color={iconColor} />
+              <Neumorphic
+                width={60}
+                height={60}
+                radius={15}
+                background={COLORS.PRIMARY}
+                centered>
+              
+                <Feather
+                  name="map"
+                  size={32}
+                  color={iconColor} />
+              
               </Neumorphic>
             );
           }
           
           else if (route.name === "Activity") {
             return (
-              <Neumorphic width={60} height={60} background={COLORS.PRIMARY} radius={15} centered>
-                <AntDesign name="barschart" size={32} color={iconColor} />
+              <Neumorphic
+                width={60}
+                height={60}
+                radius={15}
+                background={COLORS.PRIMARY}
+                centered>
+                
+                <AntDesign
+                  name="barschart"
+                  size={32}
+                  color={iconColor} />
+              
               </Neumorphic>
             );
           }
           
           else {
             return (
-              <Neumorphic width={60} height={60} background={COLORS.PRIMARY} radius={15} centered>
-               <AntDesign name="creditcard" size={32} color={iconColor} />
+              <Neumorphic
+                width={60}
+                height={60}
+                radius={15}
+                background={COLORS.PRIMARY}
+                centered>
+                
+                <AntDesign 
+                  name="creditcard"
+                  size={32}
+                  color={iconColor} />
+              
               </Neumorphic>
             );
           }
@@ -74,7 +110,6 @@ const TabNavigator = () => {
         showLabel: false,
       }} >
 
-      { /* Navigation Tabs */ }
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Trips" component={TripScreen} />
       <Tab.Screen name="Activity" component={ActivityScreen} />

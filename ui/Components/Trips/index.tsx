@@ -15,7 +15,7 @@ interface Props {
 const pinnedTripData = [
   { id: 0, method: "LR", disabilityRating: "GOOD", origin: "Dulwich Hull", destination: "Central" },
   { id: 1, method: "LR", disabilityRating: "GOOD", origin: "Wentworth Park", destination: "Moore Park" },
-  { id: 2, method: "LR", disabilityRating: "POOR", origin: "UNSW Anzac Parade", destination: "Haymarket" }
+  { id: 2, method: "LR", disabilityRating: "POOR", origin: "UNSW Anzac Parade", destination: "Haymarket"}
 ];
 
 const unpinnedTripData = [
@@ -30,7 +30,7 @@ const Trips: FC<Props> = ({ navigation, pinned }) => {
   
   return (
     <View style={{alignItems: 'center'}}>
-    { TripData.map(item =>
+    {TripData.map(item =>
       <TouchableOpacity
         key={item.id}
         onPress={() => navigation.navigate('View Trip Journeys', {
@@ -68,7 +68,7 @@ const Trips: FC<Props> = ({ navigation, pinned }) => {
           </View>
         </Neumorphic>  
       </TouchableOpacity>
-    )}
+  )}
   </View>
   );
 

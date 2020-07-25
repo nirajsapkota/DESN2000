@@ -1,13 +1,8 @@
 import React, { FC } from 'react';
 
 import { 
-  TouchableOpacity,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Image,
-  View,
-  Text
+  TouchableOpacity, SafeAreaView, ScrollView,
+  StyleSheet, Image, View, Text
 } from 'react-native';
 
 import { 

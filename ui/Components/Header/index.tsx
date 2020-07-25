@@ -1,7 +1,12 @@
 import React, { FC } from 'react';
 
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; 
+import { 
+  TouchableOpacity, StyleSheet, Image, View
+} from 'react-native';
+
+import { 
+  Ionicons 
+} from '@expo/vector-icons'; 
 
 import Neumorphic from '../Neumorphic';
 import * as COLORS from '../../Constants/colors';
@@ -11,15 +16,31 @@ interface HeaderProps {
   navigation: DrawerNavigationProp<any, any>;
 }
 
-const Header: FC<HeaderProps> = ({ navigation }) => {
+const Header: FC<HeaderProps> =
+  ({ navigation }) => {
+  
   return (
     <View style={S.container}>
 
       <View style={S.button}>
-        <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          <Neumorphic width={60} height={60} background={COLORS.PRIMARY} radius={15} centered>
-            <Ionicons name="md-menu" size={32} color={COLORS.GRAY} />
+        <TouchableOpacity
+          onPress={() => navigation.openDrawer()}>
+
+          <Neumorphic
+            width={60}
+            height={60}
+            radius={15}
+            background={COLORS.PRIMARY}
+            centered
+            >
+            
+            <Ionicons
+              name="md-menu"
+              size={32}
+              color={COLORS.GRAY} />
+          
           </Neumorphic>
+        
         </TouchableOpacity>
       </View>
 
