@@ -37,7 +37,7 @@ const ActivityTrips: FC<TripProps> = ({ pinned }) => {
   var title;
   var trip;
   return (
-    <View style={{alignItems: 'center'}}>
+    <View >
         { TripData.map(item => 
             {
                 trip = (
@@ -72,8 +72,8 @@ const ActivityTrips: FC<TripProps> = ({ pinned }) => {
                 )
                 if (item.order == 0){
                     title = (<View>
-                                <Text>
-                                    {item.date}
+                                <Text style={S.sectionText}>
+                                     {item.date}
                                 </Text> 
                             </View>)
                 } else {
@@ -84,16 +84,18 @@ const ActivityTrips: FC<TripProps> = ({ pinned }) => {
                     )
                 }
                 return(
-                    <View> 
+                    <View >
                         {title}
-                        {trip}
+                        <View style={{alignItems: 'flex-start'}}>
+                            {trip}
+                        </View>
                     </View>
                 )
             }
         )}
 
         <View>
-            <Text>
+            <Text style={S.sectionText}>
                 There are no more trips to display...
             </Text>
         </View>
@@ -113,6 +115,13 @@ const S = StyleSheet.create({
     },
     text: {
         fontFamily: 'Arial Rounded MT Bold',
+    },
+    sectionText: {
+        color: '#456078',
+        marginLeft:5,
+        fontSize: 10,
+        lineHeight: 28,
+        fontWeight: 'bold',
     },
     priceText: {
         fontSize: 12,

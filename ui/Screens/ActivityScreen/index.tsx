@@ -18,7 +18,8 @@ const ActivityScreen: FC<ActivityScreenProps> = ({ navigation }) => {
       <ScrollView contentContainerStyle={STYLES.container} style={{flex:1}}>
         <Text style={STYLES.title}> Activity </Text>
         <Text style={[STYLES.subtitle, {marginTop: 15}]}> Travel frequency and spending </Text>
-        <ActivityGraph />
+        <ActivityGraph graphType="frequency"/>
+        <ActivityGraph graphType="spendings"/>
         <Text style={[STYLES.subtitle, {marginTop: 15}]}> Travel history </Text>
         <ActivityTrips />
       </ScrollView>

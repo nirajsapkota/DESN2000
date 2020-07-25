@@ -10,44 +10,101 @@ import * as COLORS from '../../../../Constants/colors';
 var CanvasJSReact = require('./canvasjs.react');
 var CanvasJSChart = CanvasJSReact.default.CanvasJSChart;
 
+interface ActivityGraphProps {
+    graphType: String
+};
 
-const ActivityGraph: FC = ({ }) => {
+const ActivityGraph: FC<ActivityGraphProps> = ({graphType}) => {
     // console.log(CanvasJSReact);
+    var options = {};
 
-    // console.log(CanvasJSReact.default.CanvasJSChart);
-    const options = {
-        animationEnabled: true,
-        title:{
-            text: "Monthly Sales - 2017"
-        },
-        axisX: {
-            valueFormatString: "MMM"
-        },
-        axisY: {
-            title: "Sales (in USD)",
-            prefix: "$",
-            includeZero: false
-        },
-        data: [{
-            yValueFormatString: "$#,###",
-            xValueFormatString: "MMMM",
-            type: "spline",
-            dataPoints: [
-                { x: new Date(2017, 0), y: 25060 },
-                { x: new Date(2017, 1), y: 27980 },
-                { x: new Date(2017, 2), y: 42800 },
-                { x: new Date(2017, 3), y: 32400 },
-                { x: new Date(2017, 4), y: 35260 },
-                { x: new Date(2017, 5), y: 33900 },
-                { x: new Date(2017, 6), y: 40000 },
-                { x: new Date(2017, 7), y: 52500 },
-                { x: new Date(2017, 8), y: 32300 },
-                { x: new Date(2017, 9), y: 42000 },
-                { x: new Date(2017, 10), y: 37160 },
-                { x: new Date(2017, 11), y: 38400 }
-            ]
-        }]
+    if (graphType == "spendings"){
+        options = {
+            animationEnabled: true,
+            backgroundColor: '#F2F3F7',
+            title:{
+                text: "Monthly Spendings",
+                fontFamily: 'Arial Rounded MT Bold',
+    
+            },
+            axisX: {
+                valueFormatString: "MMM"
+            },
+            axisY: {
+                title: "Amount Spent (AUD)",
+                fontFamily: 'Arial Rounded MT Bold',
+                gridThickness: 0,
+                prefix: "$",
+                includeZero: false
+            },
+            data: [{
+                yValueFormatString: "$#,###",
+                xValueFormatString: "MMMM",
+                type: "spline",
+                dataPoints: [
+                    { x: new Date(2019, 9), y: 25*4 },
+                    { x: new Date(2019, 10), y: 27*4 },
+                    { x: new Date(2019, 11), y: 42*4 },
+                    { x: new Date(2019, 12), y: 32*4 },
+                    { x: new Date(2020, 1), y: 35*4 },
+                    { x: new Date(2020, 2), y: 33*4 },
+                    { x: new Date(2020, 3), y: 40*4 },
+                    { x: new Date(2020, 4), y: 52*4 },
+                    { x: new Date(2020, 5), y: 32*4 },
+                    { x: new Date(2020, 6), y: 42*4 },
+                    { x: new Date(2020, 7), y: 37*4 },
+                    { x: new Date(2020, 8), y: 38*4 }
+                ]
+                }]
+            }
+    } else if (graphType == "frequency"){
+        options = {
+            animationEnabled: true,
+            backgroundColor: '#F2F3F7',
+            title:{
+                text: "Monthly Travel Count",
+                fontFamily: 'Arial Rounded MT Bold',
+    
+            },
+            axisX: {
+                valueFormatString: "MMM"
+            },
+            axisY: {
+                title: "Number of Trips",
+                fontFamily: 'Arial Rounded MT Bold',
+                gridThickness: 0,
+                prefix: "",
+                includeZero: false
+            },
+            data: [{
+                yValueFormatString: "#,###",
+                xValueFormatString: "MMMM",
+                type: "spline",
+                dataPoints: [
+                    { x: new Date(2019, 9), y: 2 },
+                    { x: new Date(2019, 10), y: 3 },
+                    { x: new Date(2019, 11), y: 4 },
+                    { x: new Date(2019, 12), y: 3 },
+                    { x: new Date(2020, 1), y: 4 },
+                    { x: new Date(2020, 2), y: 3},
+                    { x: new Date(2020, 3), y: 4},
+                    { x: new Date(2020, 4), y: 5 },
+                    { x: new Date(2020, 5), y: 3 },
+                    { x: new Date(2020, 6), y: 4 },
+                    { x: new Date(2020, 7), y: 4 },
+                    { x: new Date(2020, 8), y: 4}
+                ]
+                }]
+            }
+    } else {
+        options = {
+            title:{
+                text: "",
+            },
+            data: []
+            }
     }
+   
     return (
         <div>
             <CanvasJSChart options = {options}
