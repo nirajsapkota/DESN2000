@@ -5,6 +5,7 @@ import * as shape from 'd3-shape'
 import { G, Line, NumberProp } from 'react-native-svg'
 import { View, Text } from 'react-native';
 
+
 interface ActivityGraphProps {
     graphType: String
 };
@@ -24,9 +25,13 @@ interface CustomGridVariables {
 const ActivityGraph: FC<ActivityGraphProps> = ({graphType}) => {
     // console.log(CanvasJSReact);
     var options = {};
-    var data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]
-    const dataSpendings = [25*4,27*4,42*4,32*4,35*4,33*4,40*4,52*4, 32*4,42*4, 37*4,38*4]
-    const dataFrequency = [2,3,4,3,4,3,4,5,3,4,4,4]
+    var data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80];
+    const dataSpendings = [25*4,27*4,42*4,32*4,35*4,33*4,40*4,52*4, 32*4,42*4, 37*4,38*4];
+    var ticksSpendings = 15;
+    const dataFrequency = [2,3,4,3,4,3,4,5,3,4,4,4];
+    var ticksFrequency = 5;
+    var numTicks = 10;
+
     const months = [
         "Jan",
         "Feb",
@@ -44,6 +49,7 @@ const ActivityGraph: FC<ActivityGraphProps> = ({graphType}) => {
     const axesSvg = { fontSize: 10, fill: 'black' , fillOpacity: 1, opacity:1, };
     const verticalContentInset = {top: 10, bottom: 10 }
     const xAxisHeight = 30
+
 
     // a const function expression that returns a grid
     //we use destructuring to do {object params} => { param1.blah} instead of obj => {obj.param1.blah}
@@ -87,8 +93,10 @@ const ActivityGraph: FC<ActivityGraphProps> = ({graphType}) => {
     )};
     if (graphType == "spendings"){
         data = dataSpendings;
+        numTicks = ticksSpendings;
     } else if (graphType == "frequency"){
         data = dataFrequency;
+        numTicks = ticksFrequency;
     }
 
     //transform text doesnt seem to work on mobile
@@ -108,6 +116,7 @@ const ActivityGraph: FC<ActivityGraphProps> = ({graphType}) => {
                     style={{ marginBottom: xAxisHeight }}
                     contentInset={verticalContentInset}
                     svg={axesSvg}
+                    numberOfTicks={numTicks}
                     // formatLabel={(value, index) => index}
                 />
                 
@@ -120,7 +129,7 @@ const ActivityGraph: FC<ActivityGraphProps> = ({graphType}) => {
                         curve={shape.curveNatural}
                         contentInset={verticalContentInset}
                         // gridMin={0}
-                        
+                        numberOfTicks={numTicks}
                         >
                         {/* <Grid direction={Grid.Direction.BOTH}/> */}
                         <CustomGrid />
