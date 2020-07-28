@@ -1,120 +1,157 @@
 import React, { FC } from 'react';
 import Neumorphic from '../../../../Components/Neumorphic';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-// import {  } from './Components';
-
-import STYLES from '../../../../styles';
-import * as COLORS from '../../../../Constants/colors';
-
-// import CanvasJSReact from './canvasjs.react';
-var CanvasJSReact = require('./canvasjs.react');
-var CanvasJSChart = CanvasJSReact.default.CanvasJSChart;
+import { LineChart, Grid, XAxis, YAxis } from 'react-native-svg-charts'
+import * as shape from 'd3-shape'
+import { G, Line, NumberProp } from 'react-native-svg'
+import { View, Text } from 'react-native';
 
 interface ActivityGraphProps {
     graphType: String
 };
 
+interface CustomGridVariables {
+    x?:any;
+    y?:any;
+    data?:any;
+    ticks?:any;
+}
+// interface CustomGridCreator {
+//     ( x:any, y:any, data:any, ticks:any ): CustomGridVariables;
+// }
+
+
+//TODO: Fix the X-axis on web (works on mobile), and add axis titles
 const ActivityGraph: FC<ActivityGraphProps> = ({graphType}) => {
     // console.log(CanvasJSReact);
     var options = {};
+    var data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]
+    const dataSpendings = [25*4,27*4,42*4,32*4,35*4,33*4,40*4,52*4, 32*4,42*4, 37*4,38*4]
+    const dataFrequency = [2,3,4,3,4,3,4,5,3,4,4,4]
+    const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+    ]
+    const axesSvg = { fontSize: 10, fill: 'black' , fillOpacity: 1, opacity:1, };
+    const verticalContentInset = {top: 10, bottom: 10 }
+    const xAxisHeight = 30
 
+    // a const function expression that returns a grid
+    //we use destructuring to do {object params} => { param1.blah} instead of obj => {obj.param1.blah}
+
+    //I cant get destructuring to work
+    //Somehow, when the grid is created, the grid variables are passed in as a parameter? 
+    const CustomGrid  =  (obj:CustomGridVariables) => {
+        var ticks = obj.ticks;
+        var x = obj.x;
+        var y = obj.y;
+        var data = obj.data;
+        return (
+        <G>
+            {
+                // Horizontal grid
+                ticks.map((tick:any) => (
+                    <Line
+                        key={ tick }
+                        x1={ '0%' }
+                        x2={ '100%' }
+                        y1={ y(tick) }
+                        y2={ y(tick) }
+                        stroke={ 'rgba(0,0,0,0.2)' }
+                    />
+                ))
+            }
+            {
+                // Vertical grid
+                data.map((_:any, index:any) => (
+                    <Line
+                        key={ index }
+                        y1={ '0%' }
+                        y2={ '100%' }
+                        x1={ x(index) }
+                        x2={ x(index) }
+                        stroke={ 'rgba(0,0,0,0.2)' }
+                    />
+                ))
+            }
+        </G>
+    )};
     if (graphType == "spendings"){
-        options = {
-            animationEnabled: true,
-            backgroundColor: '#F2F3F7',
-            title:{
-                text: "Monthly Spendings",
-                fontFamily: 'Arial Rounded MT Bold',
-    
-            },
-            axisX: {
-                valueFormatString: "MMM"
-            },
-            axisY: {
-                title: "Amount Spent (AUD)",
-                fontFamily: 'Arial Rounded MT Bold',
-                gridThickness: 0,
-                prefix: "$",
-                includeZero: false
-            },
-            data: [{
-                yValueFormatString: "$#,###",
-                xValueFormatString: "MMMM",
-                type: "spline",
-                dataPoints: [
-                    { x: new Date(2019, 9), y: 25*4 },
-                    { x: new Date(2019, 10), y: 27*4 },
-                    { x: new Date(2019, 11), y: 42*4 },
-                    { x: new Date(2019, 12), y: 32*4 },
-                    { x: new Date(2020, 1), y: 35*4 },
-                    { x: new Date(2020, 2), y: 33*4 },
-                    { x: new Date(2020, 3), y: 40*4 },
-                    { x: new Date(2020, 4), y: 52*4 },
-                    { x: new Date(2020, 5), y: 32*4 },
-                    { x: new Date(2020, 6), y: 42*4 },
-                    { x: new Date(2020, 7), y: 37*4 },
-                    { x: new Date(2020, 8), y: 38*4 }
-                ]
-                }]
-            }
+        data = dataSpendings;
     } else if (graphType == "frequency"){
-        options = {
-            animationEnabled: true,
-            backgroundColor: '#F2F3F7',
-            title:{
-                text: "Monthly Travel Count",
-                fontFamily: 'Arial Rounded MT Bold',
-    
-            },
-            axisX: {
-                valueFormatString: "MMM"
-            },
-            axisY: {
-                title: "Number of Trips",
-                fontFamily: 'Arial Rounded MT Bold',
-                gridThickness: 0,
-                prefix: "",
-                includeZero: false
-            },
-            data: [{
-                yValueFormatString: "#,###",
-                xValueFormatString: "MMMM",
-                type: "spline",
-                dataPoints: [
-                    { x: new Date(2019, 9), y: 2 },
-                    { x: new Date(2019, 10), y: 3 },
-                    { x: new Date(2019, 11), y: 4 },
-                    { x: new Date(2019, 12), y: 3 },
-                    { x: new Date(2020, 1), y: 4 },
-                    { x: new Date(2020, 2), y: 3},
-                    { x: new Date(2020, 3), y: 4},
-                    { x: new Date(2020, 4), y: 5 },
-                    { x: new Date(2020, 5), y: 3 },
-                    { x: new Date(2020, 6), y: 4 },
-                    { x: new Date(2020, 7), y: 4 },
-                    { x: new Date(2020, 8), y: 4}
-                ]
-                }]
-            }
-    } else {
-        options = {
-            title:{
-                text: "",
-            },
-            data: []
-            }
+        data = dataFrequency;
     }
-   
+
+    //transform text doesnt seem to work on mobile
+    //TODO: fix X-axis on browser
     return (
-        <div>
-            <CanvasJSChart options = {options}
-                /* onRef={ref => this.chart = ref} */
-            />
-            {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
-        </div>
-    );
-  
-  }
-  
-  export default ActivityGraph;
-  
+        <View>
+            <View style={{flexDirection:'row',transform:[{rotate:'270-deg'},{translateX:-20},{translateY:-140}]}}>
+                <Text>
+                    Amount Spent (AUD)
+                </Text>
+            </View>
+                
+            <View style={{ height: 200, padding: 10, flexDirection: 'row',transform:[{translateX:1}]}}>
+                
+                <YAxis
+                    data={data}
+                    style={{ marginBottom: xAxisHeight }}
+                    contentInset={verticalContentInset}
+                    svg={axesSvg}
+                    // formatLabel={(value, index) => index}
+                />
+                
+                <View style={{ flex: 1, marginLeft: 10 }}>
+                    <LineChart
+                        style={{ flex: 1 }}
+                        // style={{ height: 200 }}
+                        data={data}
+                        svg={{ stroke: 'rgb(134, 65, 244)' }}
+                        curve={shape.curveNatural}
+                        contentInset={verticalContentInset}
+                        // gridMin={0}
+                        
+                        >
+                        {/* <Grid direction={Grid.Direction.BOTH}/> */}
+                        <CustomGrid />
+                        {/* <Grid /> */}
+                    </LineChart>
+                    {/* <View style={{transform:[{translateY:10}]}}> */}
+                    <XAxis
+                        style={{ marginHorizontal: -10, height: xAxisHeight,transform:[{translateY:10}]}}
+                        data={data}
+                        contentInset={{ left: 10, right: 10 }}
+                        formatLabel={(value, index) => ''+months[index]}
+                        svg={axesSvg}
+                        
+                    />
+                    {/* </View> */}
+                    
+                    <View style={{flexDirection:'row',justifyContent:'center'}}>
+                        <Text>
+                            Months
+                        </Text>
+                    </View>
+                    {/* <View style={{ height: 0 }}>
+                        <Text style={{ fontSize: 10, color: "grey", textAlign: "center" }}>Months</Text>
+                    </View> */}
+                </View>
+            
+                
+            </View>
+        
+        </View>
+
+    )
+}
+export default ActivityGraph;

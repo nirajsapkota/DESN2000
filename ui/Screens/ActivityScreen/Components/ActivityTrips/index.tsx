@@ -29,76 +29,78 @@ const L1Logo = () => {
         </View>
     );
 }
-
+// Maybe do map and map
 const ActivityTrips: FC<TripProps> = ({ pinned }) => {
   
   var TripData = [... activityTripsData];
 //   pinned ? TripData = [...pinnedTripData] : TripData = [...unpinnedTripData];
   var title;
   var trip;
+  //default width of 335 on iphone 10 , width of trips is 195
+  //width of 280 on iphone5S on neumorphic and trip details width of 150
+  //
   return (
     <View >
-        { TripData.map(item => 
-            {
-                trip = (
-                    <TouchableOpacity key={item.id} onPress={() => console.log("Loading trip: " + item.id)}>
-                    <Neumorphic key={item.id} width={335} height={60} background={COLORS.PRIMARY} radius={10} style={{marginTop: 15}}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      { TripData.map(item => 
+        {
+          trip = (
+            <TouchableOpacity key={item.id} onPress={() => console.log("Loading trip: " + item.id)}>
+              <Neumorphic key={item.id} width={335} height={60} background={COLORS.PRIMARY} radius={10} style={{marginTop: 15}}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
 
-                            {/* Trip Service Logo*/}
-                            <View style={{alignItems: 'center', width: 64, height: 64}}>
-                                <Image source={require('./lightrail.png')} />
-                            </View>
-                            
-                            {/* Trip details */}
-                            <View style={{width: 215}}>
-                                <Text style={[STYLES.subtitle, {color: 'black', marginBottom: 1}]}> {item.origin} to {item.destination} </Text>
-                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                    <L1Logo />
-                                    <Text>  </Text>
-                                    <Text style={[S.text,S.tripTimes]}>{item.startTime} to {item.endTime}, {item.duration}</Text>
-                                </View>
-                            </View>
-                            
-                            {/* Trip Cost */}
-                            <View style={{alignItems: 'center', width: 56}}>
-                                {/* <Image source={require('./chevron-forward.png')} /> */}
-                                <Text style={[S.text,S.priceText]}>${item.cost}</Text>
-                            </View>
-                        
-                        </View>
-                    </Neumorphic>  
-                    </TouchableOpacity>
-                )
-                if (item.order == 0){
-                    title = (<View>
-                                <Text style={S.sectionText}>
-                                     {item.date}
-                                </Text> 
-                            </View>)
-                } else {
-                    title = (
-                        <View> 
-                            <Text> </Text> 
-                        </View>
-                    )
-                }
-                return(
-                    <View >
-                        {title}
-                        <View style={{alignItems: 'flex-start'}}>
-                            {trip}
-                        </View>
+                  {/* Trip Service Logo*/}
+                  <View style={{alignItems: 'center',justifyContent:'center', width: 64, height: 64}}>
+                    <Image source={require('./lightrail.png')} />
+                  </View>
+                                
+                  {/* Trip details */}
+                  <View style={{width: 195}}>
+                    <Text style={[STYLES.subtitle, {color: 'black', marginBottom: 1}]}> {item.origin} to {item.destination} </Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <L1Logo />
+                      <Text>  </Text>
+                      <Text style={[S.text,S.tripTimes]}>{item.startTime} to {item.endTime}, {item.duration}</Text>
                     </View>
-                )
-            }
-        )}
+                  </View>
 
-        <View>
-            <Text style={S.sectionText}>
-                There are no more trips to display...
-            </Text>
-        </View>
+                  {/* Trip Cost */}
+                  <View style={{alignItems: 'center', width: 56}}>
+                    {/* <Image source={require('./chevron-forward.png')} /> */}
+                    <Text style={[S.text,S.priceText]}>${item.cost}</Text>
+                  </View>
+                </View>
+              </Neumorphic>  
+            </TouchableOpacity>
+          )
+          if (item.order == 0){
+            title = (<View>
+                      <Text style={S.sectionText}>
+                        {item.date}
+                      </Text> 
+                    </View>)
+          } else {
+            title = (
+              <View> 
+                <Text> </Text> 
+              </View>
+            )
+          }
+          return(
+            <View key={item.id}>
+              {title}
+              <View style={{alignItems: 'flex-start'}}>
+                {trip}
+              </View>
+            </View>
+          )
+        }
+      )}
+
+      <View>
+        <Text style={S.sectionText}>
+          There are no more trips to display...
+        </Text>
+      </View>
     </View>
   );
 
