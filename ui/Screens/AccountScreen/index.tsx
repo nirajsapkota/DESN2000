@@ -4,6 +4,8 @@ import { Header } from '../../Components';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+import DatePicker from 'react-native-datepicker'
+
 import STYLES from '../../styles';
 
 interface AccountScreenProps {
@@ -13,7 +15,9 @@ interface AccountScreenProps {
 const AccountScreen: FC<AccountScreenProps> = ({ navigation }) => {
   const [name, setName] = useState("Roger Hoffman");
   const [location, setLocation] = useState("Sydney, NSW");
-  const [dob, setDob] = useState("21st of June 1973");
+
+  const [date, setDate] = useState("2000-01-01");
+
   const [syncCards, setSyncCards] = useState(false);
   const [syncTrips, setSyncTrips] = useState(false);
 
@@ -29,7 +33,7 @@ const AccountScreen: FC<AccountScreenProps> = ({ navigation }) => {
 
   const setValidatedDob = (text: string) => {
     if (!(text.length <= 0))
-      setDob(text);
+      setDate(text);
   }
 
   return (
@@ -79,13 +83,33 @@ const AccountScreen: FC<AccountScreenProps> = ({ navigation }) => {
       <View style={S.row}>
         <Text style={S.subsubtitle}> Date of Birth </Text>
         <View style={S.textEditContainer}>
-          <TextInput
-            style={S.textEditArea}
-            onSubmitEditing={(e) => setValidatedDob(e.nativeEvent.text)}
-            value={dob}
-            placeholder={"John Smith"}
-            returnKeyType="done"
-          />
+
+        <DatePicker
+        style={{width: 175}}
+        date={date}
+        mode="date"
+        placeholder="select date"
+        format="YYYY-MM-DD"
+        minDate="1900-01-01"
+        maxDate="2020-08-05"
+        confirmBtnText="Confirm"
+        cancelBtnText="Cancel"
+        customStyles={{
+          dateIcon: {
+            position: 'absolute',
+            left: 0,
+            top: 4,
+            marginLeft: 0
+          },
+          dateInput: {
+            marginLeft: 36
+          }
+          // ... You can check the source to find the other keys.
+        }}
+        onDateChange={(date) => {setValidatedDob(date)}}
+      />
+
+
           <MaterialCommunityIcons style={S.textEditImage} name="pencil-outline" size={20} />
         </View>
       </View>
