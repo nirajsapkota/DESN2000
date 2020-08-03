@@ -16,6 +16,9 @@ import {
 import * as COLORS from '../../Constants/colors';
 import STYLES from '../../styles';
 
+import Dialog from "react-native-dialog";
+import Snackbar from 'react-native-snackbar-component';
+
 interface NeumorphicAlertProps {
   children: any,
   width?: number,
@@ -77,7 +80,6 @@ const NeumorphicImageButton: FC<NeumorphicImageButtonProps> =
       <Text> {title} </Text>
     </View>
   );
-
 }
 
 const AccessiblityEmergencyScreen: FC<AccessiblityEmergencyScreenProps> = ({
@@ -85,11 +87,32 @@ const AccessiblityEmergencyScreen: FC<AccessiblityEmergencyScreenProps> = ({
 
   const [helpRequested, setHelpRequested] = useState(false);
   const [helpMessage, setHelpMessage] = useState("");
+  const [visible, setVisible] = useState(false);
+  
 
   function HandleRequest(message: string): void {
-    setHelpRequested(true);
+    setHelpRequested(false);
     setHelpMessage(message);
+    setVisible(true);
   }
+
+  function confirmHelp(): void {
+    setHelpRequested(true);
+    setVisible(false);
+    setHelpMessage("You've requested " + helpMessage + ", help is on the way!");
+  }
+
+  function doneHelp(): void {
+    setHelpRequested(false);
+    setVisible(false);
+  }
+
+  function quitDialog(): void {
+    setVisible(false);
+  }
+
+
+
 
   return (
     <SafeAreaView>
@@ -109,38 +132,51 @@ const AccessiblityEmergencyScreen: FC<AccessiblityEmergencyScreenProps> = ({
             src={'./boarding.png'}
             requestHandler={HandleRequest}
             message={'boarding assistance'}
-            title={'boarding assistance'}
+            title={'Boarding assistance'}
           />
           
           <NeumorphicImageButton
             src={'./alighting.png'}
             requestHandler={HandleRequest}
             message={'alighting assistance'}
-            title={'alighting assistance'}
+            title={'Alighting assistance'}
           />
           
           <NeumorphicImageButton
             src={'./ambulance.png'}
             requestHandler={HandleRequest}
             message={'emergency assistance'}
-            title={'injury or emergency'}
+            title={'Injury or emergency'}
           />
           
           <NeumorphicImageButton
             src={'./police.png'}
             requestHandler={HandleRequest}
-            message={'duress assistance'}
-            title={'duress'}
+            message={'Duress assistance'}
+            title={'Duress'}
           />
         
           <NeumorphicImageButton
             src={'./other.png'}
             requestHandler={HandleRequest}
             message={'assistance'}
-            title={'other'}
+            title={'Other'}
           />
-        
-          { 
+
+
+          <View>
+            <Dialog.Container visible={visible}>
+              <Dialog.Title>Confirm Assistance</Dialog.Title>
+              <Dialog.Description>
+                Are you sure?
+              </Dialog.Description>
+              <Dialog.Button label="No" onPress={quitDialog}/>
+              <Dialog.Button label="Yes" onPress={confirmHelp}/>
+            </Dialog.Container>
+          </View>
+
+
+          {/* { 
             helpRequested ? 
               <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 40}}>
                 <Text style={S.helpText}>
@@ -152,7 +188,17 @@ const AccessiblityEmergencyScreen: FC<AccessiblityEmergencyScreenProps> = ({
               </View>
             :
               null
-          }
+          } */}
+
+          <Snackbar 
+            visible={helpRequested}
+            textMessage={helpMessage}
+            actionHandler={() => {
+              {doneHelp};
+              setHelpRequested(false);
+            }}
+            actionText="x"
+          />
 
         </View>
 
@@ -184,5 +230,5 @@ const S = StyleSheet.create({
     fontFamily: 'Arial Rounded MT Bold',
     fontSize: 14,
     color: COLORS.ACCENT,
-  }
+  },
 });
