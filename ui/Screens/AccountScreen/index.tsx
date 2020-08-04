@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { SafeAreaView, View, Text, StyleSheet, Switch, Image, TextInput } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, Switch, Image, TextInput, DatePickerIOS } from 'react-native';
 import { Header } from '../../Components';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -13,9 +13,9 @@ interface AccountScreenProps {
 };
 
 const AccountScreen: FC<AccountScreenProps> = ({ navigation }) => {
+
   const [name, setName] = useState("Roger Hoffman");
   const [location, setLocation] = useState("Sydney, NSW");
-
   const [date, setDate] = useState("2000-01-01");
 
   const [syncCards, setSyncCards] = useState(false);
@@ -39,11 +39,11 @@ const AccountScreen: FC<AccountScreenProps> = ({ navigation }) => {
   return (
     <SafeAreaView>
 
-      <Header navigation={navigation} />
+    <Header navigation={navigation} />
+    
+    <View style={STYLES.container}>
 
-      <View style={STYLES.container}>
         <Text style={STYLES.title}> My account </Text>
-      </View>
 
       <View style={S.profileContainer}>
         <Image style={S.profileImage} source={require('../../assets/hidethepainharold.jpg')} />
@@ -61,7 +61,7 @@ const AccountScreen: FC<AccountScreenProps> = ({ navigation }) => {
             value={name}
             placeholder={"John Smith"}
             returnKeyType="done"
-          />
+            />
           <MaterialCommunityIcons style={S.textEditImage} name="pencil-outline" size={20} />
         </View>
       </View>
@@ -75,7 +75,7 @@ const AccountScreen: FC<AccountScreenProps> = ({ navigation }) => {
             value={location}
             placeholder={"John Smith"}
             returnKeyType="done"
-          />
+            />
           <MaterialCommunityIcons style={S.textEditImage} name="pencil-outline" size={20} />
         </View>
       </View>
@@ -84,30 +84,34 @@ const AccountScreen: FC<AccountScreenProps> = ({ navigation }) => {
         <Text style={S.subsubtitle}> Date of Birth </Text>
         <View style={S.textEditContainer}>
 
+        {/* <DatePickerIOS 
+          date={new Date()}
+          /> */}
+
         <DatePicker
-        style={{width: 175}}
-        date={date}
-        mode="date"
-        placeholder="select date"
-        format="YYYY-MM-DD"
-        minDate="1900-01-01"
-        maxDate="2020-08-05"
-        confirmBtnText="Confirm"
-        cancelBtnText="Cancel"
-        customStyles={{
-          dateIcon: {
-            position: 'absolute',
-            left: 0,
-            top: 4,
-            marginLeft: 0
-          },
-          dateInput: {
-            marginLeft: 36
-          }
-          // ... You can check the source to find the other keys.
-        }}
-        onDateChange={(date) => {setValidatedDob(date)}}
-      />
+          style={{width: 175}}
+          date={date}
+          mode="date"
+          placeholder="select date"
+          format="YYYY-MM-DD"
+          minDate="1900-01-01"
+          maxDate="2020-08-05"
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          customStyles={{
+            dateIcon: {
+              position: 'absolute',
+              left: 0,
+              top: 4,
+              marginLeft: 0
+            },
+            dateInput: {
+              marginLeft: 36
+            }
+            // ... You can check the source to find the other keys.
+          }}
+          onDateChange={(date) => {setValidatedDob(date)}}
+          />
 
 
           <MaterialCommunityIcons style={S.textEditImage} name="pencil-outline" size={20} />
@@ -120,16 +124,16 @@ const AccountScreen: FC<AccountScreenProps> = ({ navigation }) => {
         <Switch
           value={syncCards}
           onValueChange={() => setSyncCards(!syncCards)}
-        />
+          />
       </View>
       <View style={S.row}>
         <Text style={S.subsubtitle}> Sync Trips </Text>
         <Switch
           value={syncTrips}
           onValueChange={() => setSyncTrips(!syncTrips)}
-        />
+          />
       </View>
-
+    </View>
     </SafeAreaView>
   );
 }
@@ -138,13 +142,13 @@ export default AccountScreen;
 
 const S = StyleSheet.create({
   title: {
-    fontFamily: 'Arial Rounded MT Bold',
+    fontFamily: 'Arial Rounded MT Bold', 
     fontSize: 30,
     color: '#456078',
     marginBottom: 15
   },
   subtitle: {
-    fontFamily: 'Arial Rounded MT Bold',
+    fontFamily: 'Arial Rounded MT Bold', 
     fontSize: 18,
     color: 'black',
     marginBottom: 17,
@@ -152,9 +156,9 @@ const S = StyleSheet.create({
   },
   subsubtitle: {
     flex: 3,
-    fontFamily: 'Arial Rounded MT Bold',
-    fontSize: 12,
-    color: 'black',
+    fontFamily: 'Arial Rounded MT Bold', 
+    fontSize: 14,
+    color: '#797C8D',
     marginBottom: 5,
   },
   profileContainer: {

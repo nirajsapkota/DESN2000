@@ -4,6 +4,9 @@ import { View, TextInput, Modal, Text, StyleSheet, TouchableOpacity, Image, Scro
 import * as COLORS from '../../../../Constants/colors';
 import { Neumorphic } from '../../../../Components';
 
+import MastercardIcon from "./mastercard.svg";
+import VisaIcon from "./visa.svg";
+
 interface AddPaymentMethodProps {
   visibility: boolean,
   setVisibility: Function
@@ -31,8 +34,8 @@ const AddPaymentMethod: FC<AddPaymentMethodProps> =
 
         <View style={{flexDirection: 'row', marginTop: 15}}>
           <View style={{flexDirection: 'row', alignItems: 'center', width: 110}}>
-            <Image source={require('./mastercard.png')} style={{marginRight: 15}} />
-            <Image source={require('./visa.png')} style={{marginRight: 100}} />
+            <MastercardIcon style={{marginRight: 15}} />
+            <VisaIcon style={{marginRight: 100}} />
             <TouchableOpacity
               onPress={() => setVisibility(false)}>
               <Image source={require('./close.png')} />

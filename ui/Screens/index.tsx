@@ -7,9 +7,11 @@ import AccountScreen from './AccountScreen';
 import AccessibilityEmergencyScreen from './AccessibilityEmergencyScreen';
 import TalkToUsScreen from './TalkToUsScreen';
 import SettingsSecurityScreen from './SettingsSecurityScreen';
+import LoginScreen from './LoginScreen';
+import SignupScreen from './SignupScreen';
 
 export {
   HomeScreen, TripScreen, ActivityScreen, PaymentScreen, DashboardScreen,
   AccountScreen, AccessibilityEmergencyScreen, TalkToUsScreen,
-  SettingsSecurityScreen
+  SettingsSecurityScreen, LoginScreen, SignupScreen
 };

@@ -19,6 +19,13 @@ import STYLES from '../../styles';
 import Dialog from "react-native-dialog";
 import Snackbar from 'react-native-snackbar-component';
 
+import BoardingIcon from "./boarding.svg";
+import AlightingIcon from "./alighting.svg";
+import AmbulanceIcon from "./ambulance.svg";
+import PoliceIcon from "./police.svg";
+import MoreIcon from "./more.svg";
+import { ScrollView } from 'react-native-gesture-handler';
+
 interface NeumorphicAlertProps {
   children: any,
   width?: number,
@@ -49,11 +56,27 @@ const NeumorphicAlert: FC<NeumorphicAlertProps> =
       width={width || 335}
       height={height || 60}
       radius={radius || 10}
-      background={color || COLORS.ACCENT}
-    >
-      <Text> {children} </Text>
+      background={color || COLORS.ACCENT}>
+      <Text style={[S.warningText, {padding: 15}]}>{children}</Text>
     </Neumorphic>
   );
+
+}
+
+interface RenderIconProps {
+  icon: string
+}
+
+const RenderIcon: FC<RenderIconProps> =
+  ({ icon }) => {
+
+  if (icon === "boarding") return <BoardingIcon width={32} height={32} />
+  else if (icon === "alighting") return <AlightingIcon width={32} height={32} />
+  else if (icon === "ambulance") return <AmbulanceIcon width={32} height={32} />
+  else if (icon === "police") return <PoliceIcon width={32} height={32} />
+  else if (icon === "other") return <MoreIcon width={32} height={32} />
+  
+  return null;
 
 }
 
@@ -72,12 +95,12 @@ const NeumorphicImageButton: FC<NeumorphicImageButtonProps> =
           radius={radius || 10}
           background={color || COLORS.PRIMARY}
           centered>
-          
-          <Image source={require('./boarding.png')} />
+
+          <RenderIcon icon={src} />
         </Neumorphic>
       
       </TouchableOpacity>
-      <Text> {title} </Text>
+      <Text style={S.subtitle}>{title}</Text>
     </View>
   );
 }
@@ -99,7 +122,7 @@ const AccessiblityEmergencyScreen: FC<AccessiblityEmergencyScreenProps> = ({
   function confirmHelp(): void {
     setHelpRequested(true);
     setVisible(false);
-    setHelpMessage("You've requested " + helpMessage + ", help is on the way!");
+    // setHelpMessage("You've requested " + helpMessage + ", help is on the way!");
   }
 
   function doneHelp(): void {
@@ -111,53 +134,52 @@ const AccessiblityEmergencyScreen: FC<AccessiblityEmergencyScreenProps> = ({
     setVisible(false);
   }
 
-
-
-
   return (
     <SafeAreaView>
       <Header navigation={navigation} />
-
-      <View style={STYLES.container}>
+      <ScrollView contentContainerStyle={STYLES.container}>
         
         <Text style={STYLES.title}> Accessibility and emergency </Text>
+
+        <View style={{alignItems: "center", marginTop: 10}}>
+          <NeumorphicAlert color={COLORS.LIGHT_RED}>
+            Note: improper use can result in a fine upwards of $250.
+          </NeumorphicAlert>
+        </View>
         
-        <NeumorphicAlert color={COLORS.LIGHT_RED}>
-          Note: improper use can result in a fine upwards of $250.
-        </NeumorphicAlert>
         
         <View>
 
           <NeumorphicImageButton
-            src={'./boarding.png'}
+            src={'boarding'}
             requestHandler={HandleRequest}
             message={'boarding assistance'}
             title={'Boarding assistance'}
           />
           
           <NeumorphicImageButton
-            src={'./alighting.png'}
+            src={'alighting'}
             requestHandler={HandleRequest}
             message={'alighting assistance'}
             title={'Alighting assistance'}
           />
           
           <NeumorphicImageButton
-            src={'./ambulance.png'}
+            src={'ambulance'}
             requestHandler={HandleRequest}
             message={'emergency assistance'}
             title={'Injury or emergency'}
           />
           
           <NeumorphicImageButton
-            src={'./police.png'}
+            src={'police'}
             requestHandler={HandleRequest}
-            message={'Duress assistance'}
+            message={'duress assistance'}
             title={'Duress'}
           />
         
           <NeumorphicImageButton
-            src={'./other.png'}
+            src={'other'}
             requestHandler={HandleRequest}
             message={'assistance'}
             title={'Other'}
@@ -176,7 +198,7 @@ const AccessiblityEmergencyScreen: FC<AccessiblityEmergencyScreenProps> = ({
           </View>
 
 
-          {/* { 
+          { 
             helpRequested ? 
               <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 40}}>
                 <Text style={S.helpText}>
@@ -188,21 +210,22 @@ const AccessiblityEmergencyScreen: FC<AccessiblityEmergencyScreenProps> = ({
               </View>
             :
               null
-          } */}
+          }
 
-          <Snackbar 
-            visible={helpRequested}
-            textMessage={helpMessage}
-            actionHandler={() => {
-              {doneHelp};
-              setHelpRequested(false);
-            }}
-            actionText="x"
-          />
 
         </View>
 
-      </View>
+{/* 
+      <Snackbar 
+        visible={helpRequested}
+        textMessage={helpMessage}
+        actionHandler={() => {
+          {doneHelp};
+          setHelpRequested(false);
+        }}
+        actionText="x"
+      /> */}
+      </ScrollView>
     </SafeAreaView>
   );
 }

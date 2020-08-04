@@ -6,7 +6,8 @@ interface NeumorphicProps {
   width: number,
   height: number,
   background: string,
-  radius: number,
+  radius?: number,
+  radiusBottom?: number,
   centered?: boolean,
   pressed?: boolean,
   style?: Object,
@@ -14,11 +15,13 @@ interface NeumorphicProps {
 }
 
 const Neumorphic: FC<NeumorphicProps> = ({ width, height, background,
-  radius, pressed, centered, style, children }) => {
+  radius, radiusBottom, pressed, centered, style, children }) => {
   
   const S = StyleSheet.create({
     morph: {
       borderRadius: radius,
+      borderBottomLeftRadius: radiusBottom,
+      borderBottomRightRadius: radiusBottom,
       borderWidth: 1,
       backgroundColor: background,
       borderColor: color(background)
@@ -27,6 +30,8 @@ const Neumorphic: FC<NeumorphicProps> = ({ width, height, background,
     },
     morphTop: {
       borderRadius: radius,
+      borderBottomLeftRadius: radiusBottom,
+      borderBottomRightRadius: radiusBottom,
       shadowOffset: {
         width: -6,
         height: -6,
@@ -39,6 +44,8 @@ const Neumorphic: FC<NeumorphicProps> = ({ width, height, background,
     },
     morphBottom: {
       borderRadius: radius,
+      borderBottomLeftRadius: radiusBottom,
+      borderBottomRightRadius: radiusBottom,
       shadowOffset: {
         width: 6,
         height: 6,

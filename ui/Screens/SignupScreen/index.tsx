@@ -1,0 +1,157 @@
+import React, { FC, useState } from 'react';
+import { View, Text, Modal, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
+
+import * as COLORS from '../../Constants/colors';
+import { Neumorphic } from '../../Components';
+
+import TransportLogo from "./Logo.svg";
+
+interface SignupScreenProps {
+  navigation: any,
+  visibility: boolean,
+  setVisibility: Function,
+}
+
+const SignupScreen: FC<SignupScreenProps> =
+  ({ navigation, visibility, setVisibility }) => {
+  
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [location, setLocation] = useState("");
+
+  return (
+    <Modal
+      animationType="none"
+      transparent={true}
+      visible={visibility}>
+
+      <View style={S.darkOverlay}>
+      <View style={S.positioningContainer}>
+      <View style={S.centeredModal}>
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: 20}}>
+          <TransportLogo width={220} height={60} />
+          <TouchableOpacity onPress={() => {navigation.navigate('Dashboard'); setVisibility(false);}}>
+            <Image source={require('./close.png')} style={{marginTop: 12.5}} />
+          </TouchableOpacity>
+        </View>
+
+        <View style={{marginTop: 15, marginBottom: 15}}>
+          <View style={{width: 270, marginBottom: 25}}>
+            <Text style={S.title}>Welcome aboard.</Text>
+          </View>
+
+          <Text style={S.subtitle}> Email </Text>
+          <TextInput
+            style={S.textbox}
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+            placeholder="e.g. janecitizen@goodcitizen.com" />
+
+          <Text style={S.subtitle}> Username </Text>
+          <TextInput
+            style={S.textbox}
+            value={username}
+            onChangeText={(text) => setUsername(text)}
+            placeholder="e.g. janecitizen" />
+
+          <Text style={S.subtitle}> Password </Text>
+          <TextInput
+            style={S.textbox}
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            textContentType="password"
+            placeholder="*************" />
+
+          <Text style={S.subtitle}> Confirm password </Text>
+          <TextInput
+            style={S.textbox}
+            value={confirmPassword}
+            onChangeText={(text) => setConfirmPassword(text)}
+            textContentType="password"
+            placeholder="*************" />
+
+          <Text style={S.subtitle}> Location </Text>
+          <TextInput
+            style={S.textbox}
+            value={location}
+            onChangeText={(text) => setLocation(text)}
+            placeholder="e.g. Sydney, NSW" />
+        </View>
+
+        <View style={{alignItems: 'center'}}>
+          <TouchableOpacity
+            onPress={() => console.log("Logging in...")}>
+            <Neumorphic
+              width={280}
+              height={50}
+              radius={500}
+              background={COLORS.ACCENT}
+              centered>
+              <Text style={S.btnText}>Join</Text>
+            </Neumorphic>          
+          </TouchableOpacity>
+        </View>
+      </View>    
+      </View>
+      </View>
+
+    </Modal>
+  );
+
+}
+
+export default SignupScreen;
+
+const S = StyleSheet.create({
+  darkOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)'
+  },
+  positioningContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  centeredModal: {
+    backgroundColor: COLORS.PRIMARY,
+    width: 365,
+    height: 665,
+    borderRadius: 30,
+    padding: 20
+  },
+  title: {
+    fontFamily: 'Arial Rounded MT Bold',
+    fontSize: 28,
+    color: COLORS.ACCENT
+  },
+  subtitle: {
+    fontFamily: 'Arial Rounded MT Bold',
+    fontSize: 18,
+    color: COLORS.ACCENT,
+  },
+  placeholderText: {
+    fontFamily: 'Arial Rounded MT Bold',
+    fontSize: 14,
+    color: 'rgba(0,0,0,0.5)'
+  },
+  btnText: {
+    fontFamily: 'Arial Rounded MT Bold',
+    fontSize: 16,
+    color: 'white'
+  },
+  textbox: {
+    width: "100%",
+    height: 40,
+    borderRadius: 5,
+    backgroundColor: COLORS.LIGHT_GRAY,
+    marginTop: 10,
+    paddingLeft: 10,
+    marginBottom: 15
+  }
+});

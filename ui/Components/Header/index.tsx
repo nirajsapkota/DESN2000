@@ -8,6 +8,8 @@ import {
   Ionicons 
 } from '@expo/vector-icons'; 
 
+import Logo from "./Logo.svg";
+
 import Neumorphic from '../Neumorphic';
 import * as COLORS from '../../Constants/colors';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
@@ -45,7 +47,7 @@ const Header: FC<HeaderProps> =
       </View>
 
       <View>
-        <Image source={require('./logo.png')} />
+        <Logo width={220} height={60} />
       </View>
 
     </View>
@@ -59,7 +61,7 @@ const S = StyleSheet.create({
     marginTop: 10,
     marginLeft: 20,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   button: {
     marginRight: 15
