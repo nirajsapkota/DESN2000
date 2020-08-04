@@ -7,6 +7,8 @@ import { DisabilityRating } from './Components';
 import STYLES from '../../styles';
 import * as COLORS from '../../Constants/colors';
 
+import LightRailIcon from "./lightrail.svg";
+
 interface Props {
   navigation: any,
   pinned?: boolean
@@ -49,7 +51,7 @@ const Trips: FC<Props> = ({ navigation, pinned }) => {
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
 
             <View style={{alignItems: 'center', width: 64}}>
-              <Image source={require('./lightrail.png')} />
+              <LightRailIcon width={42} height={42} />
             </View>
             
             <View style={{width: 215}}>

@@ -3,11 +3,14 @@ import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { DrawerNavigator } from './Router';
 
+
+
 console.disableYellowBox = true;
 
 const App: FC = () => {
   
   return (
+    
     <NavigationContainer>
       <StatusBar barStyle="dark-content" />
       <DrawerNavigator />

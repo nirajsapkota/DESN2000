@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { SafeAreaView, View, Text, StyleSheet, Switch } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, Switch, ScrollView } from 'react-native';
 import { Header } from '../../Components';
 
 import STYLES from '../../styles';
@@ -22,57 +22,57 @@ const SettingsSecurityScreen: FC<SettingsSecurityScreenProp> =
     <SafeAreaView>
       <Header navigation={navigation} />
 
-      <View style={STYLES.container}>
-        <Text style={S.title}> Settings and Security </Text>
+      <ScrollView contentContainerStyle={STYLES.container}>
+        <Text style={S.title}>Settings and Security</Text>
 
-        <Text style={S.subtitle}> Security </Text>
+        <Text style={S.subtitle}>Security</Text>
         <View style={S.row}>
-          <Text style={S.subsubtitle}> Enable Face ID </Text>
+          <Text style={S.subsubtitle}>Enable Face ID</Text>
           <Switch
             value={faceID}
             onValueChange={() => setfaceID(!faceID)}
             />
         </View>
         
-        <Text style={S.subtitle}> Accessiblity </Text>
+        <Text style={S.subtitle}>Accessiblity</Text>
         <View style={S.row}>
-          <Text style={S.subsubtitle}> Show accessibility indicators </Text>
+          <Text style={S.subsubtitle}>Show accessibility indicators</Text>
           <Switch
             value={accesibilityIndicators}
             onValueChange={() => setAccessibilityIndicators(!accesibilityIndicators)}
             />
         </View>
 
-        <Text style={S.subtitle}> Real-time Data </Text>
+        <Text style={S.subtitle}>Real-time Data</Text>
         <View style={S.row}>
-          <Text style={S.subsubtitle}> Real-time location </Text>
+          <Text style={S.subsubtitle}>Real-time location</Text>
           <Switch
             value={rtl}
             onValueChange={() => setRTL(!rtl)}
             />
         </View>
         <View style={S.row}>
-          <Text style={S.subsubtitle}> Real-time capacity </Text>
+          <Text style={S.subsubtitle}>Real-time capacity</Text>
           <Switch
             value={rtc}
             onValueChange={() => setRTC(!rtc)}
             />
         </View>
         <View style={S.row}>
-          <Text style={S.subsubtitle}> Real-time fare price </Text>
+          <Text style={S.subsubtitle}>Real-time fare price</Text>
           <Switch
             value={rtfp}
             onValueChange={() => setRTFP(!rtfp)}
             />
         </View>
         <View style={S.row}>
-          <Text style={S.subsubtitle}> Real-time disability rating </Text>
+          <Text style={S.subsubtitle}>Real-time disability rating</Text>
           <Switch
             value={rtdr}
             onValueChange={() => setRTDR(!rtdr)}
             />
         </View>
-      </View>
+      </ScrollView>
 
     </SafeAreaView>
   );
@@ -95,13 +95,14 @@ const S = StyleSheet.create({
   },
   subsubtitle: {
     fontFamily: 'Arial Rounded MT Bold', 
-    fontSize: 12,
+    fontSize: 14,
     color: '#797C8D',
     marginBottom: 5
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginBottom: 10
   },
 });

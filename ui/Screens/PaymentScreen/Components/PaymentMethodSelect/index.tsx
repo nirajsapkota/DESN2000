@@ -4,6 +4,11 @@ import { Neumorphic } from '../../../../Components';
 import * as COLORS from '../../../../Constants/colors';
 import STYLES from '../../../../styles';
 
+import MastercardIcon from "./mastercard.svg";
+import VisaIcon from "./visa.svg";
+import RadioOnIcon from "./radio-on.svg";
+import RadioOffIcon from "./radio-off.svg";
+
 const cards = [
   { id: 0, type: "mastercard", cardNumber: "0172" },
   { id: 1, type: "visa", cardNumber: "6942" }
@@ -23,9 +28,9 @@ const PaymentMethodSelect: FC = () => {
               
               <View style={{alignItems: 'center', width: 64}}>
                 { card.type === "mastercard" ?
-                  <Image source={require('./mastercard.png')} />
+                  <MastercardIcon />
                   :
-                  <Image source={require('./visa.png')} />
+                  <VisaIcon />
                 }
               </View>
 
@@ -39,9 +44,9 @@ const PaymentMethodSelect: FC = () => {
               
               <View style={{alignItems: 'center', width: 56}}>
                 { selected === card.id ?
-                  <Image source={require('./radio-on.png')} />
+                  <RadioOnIcon />
                   :
-                  <Image source={require('./radio-off.png')} />
+                  <RadioOffIcon />
                 }
               </View>
  

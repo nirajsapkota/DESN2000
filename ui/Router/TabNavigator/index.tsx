@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Feather, AntDesign, Ionicons } from '@expo/vector-icons';
 import * as COLORS from '../../Constants/colors';
 
+
 import { 
   Neumorphic
 } from '../../Components';
@@ -103,7 +104,7 @@ const TabNavigator = () => {
         /* Set the background color and increase chin size */
         style: {
           backgroundColor: COLORS.PRIMARY,
-          height: 120
+          height: 100
         },
         
         /* Hide Labels */
