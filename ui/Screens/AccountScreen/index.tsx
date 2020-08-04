@@ -166,7 +166,7 @@ const S = StyleSheet.create({
     textAlign: 'left',
   },
   textEditImage: {
-    color: '#E6B92F',
+    color: '#4070F4',
     marginRight: 10,
   },
   textEditContainer: {
