@@ -62,6 +62,7 @@ const SignupScreen: FC<SignupScreenProps> =
 
           <Text style={S.subtitle}> Password </Text>
           <TextInput
+            secureTextEntry={true}
             style={S.textbox}
             value={password}
             onChangeText={(text) => setPassword(text)}
@@ -70,6 +71,7 @@ const SignupScreen: FC<SignupScreenProps> =
 
           <Text style={S.subtitle}> Confirm password </Text>
           <TextInput
+            secureTextEntry={true}
             style={S.textbox}
             value={confirmPassword}
             onChangeText={(text) => setConfirmPassword(text)}
