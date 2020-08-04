@@ -6,6 +6,7 @@ import {
   LoginScreen,
   SignupScreen
 } from '../../Screens';
+import { NavigationContainer } from '@react-navigation/native';
 
 interface DashboardScreenProps {
   navigation: any,
@@ -19,6 +20,7 @@ const DashboardScreen: FC<DashboardScreenProps> =
     return (
       <>
         <SignupScreen
+          navigation={navigation}
           visibility={route.params.signupModal}
           setVisibility={route.params.showSignupModal} />
   
