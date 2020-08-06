@@ -3,8 +3,8 @@ import { View, StyleSheet } from 'react-native';
 import color from 'color';
 
 interface NeumorphicProps {
-  width: number,
-  height: number,
+  width: number | string,
+  height: number | string,
   background: string,
   radius?: number,
   radiusBottom?: number,
