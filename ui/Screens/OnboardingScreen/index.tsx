@@ -1,7 +1,9 @@
 /**
- * - [ ] Research onboarding examples.
- * - [ ] Plan aesthetic using Figma.
- * - [ ] Create assets.
+ * Assignee: Ryan.
+ * - [x] Research onboarding examples.
+ * - [x] Plan aesthetic using Figma.
+ * - [x] Create assets.
+ * - [~] Prototype pages.
  * - [ ] Create 1st page.
  * - [ ] Create 2nd page.
  * - [ ] Create 3rd page.
