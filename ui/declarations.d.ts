@@ -4,5 +4,3 @@ declare module '*.svg' {
   const content: Svg;
   export default content;
 }
-
-declare module 'react-native-pages';

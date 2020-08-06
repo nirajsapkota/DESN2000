@@ -7,6 +7,7 @@ export const RED = "#F44336";
 export const GREEN = "#28B351";
 export const YELLOW = "#FFD800";
 export const BLUE = "#00A7E7";
+export const BLUE2 = "#4070F4";
 export const GRAY = "#8C94A4";
 
 // Sydney light rail line colours

@@ -9,9 +9,10 @@ import TalkToUsScreen from './TalkToUsScreen';
 import SettingsSecurityScreen from './SettingsSecurityScreen';
 import LoginScreen from './LoginScreen';
 import SignupScreen from './SignupScreen';
+import OnboardingScreen from './OnboardingScreen';
 
 export {
   HomeScreen, TripScreen, ActivityScreen, PaymentScreen, DashboardScreen,
   AccountScreen, AccessibilityEmergencyScreen, TalkToUsScreen,
-  SettingsSecurityScreen, LoginScreen, SignupScreen
+  SettingsSecurityScreen, LoginScreen, SignupScreen, OnboardingScreen
 };

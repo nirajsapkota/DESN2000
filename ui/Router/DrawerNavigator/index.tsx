@@ -3,7 +3,7 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemL
 
 import {
   DashboardScreen, AccountScreen, AccessibilityEmergencyScreen,
-  TalkToUsScreen, SettingsSecurityScreen, LoginScreen, SignupScreen
+  TalkToUsScreen, SettingsSecurityScreen, LoginScreen, SignupScreen, OnboardingScreen
 } from '../../Screens';
 
 interface DrawerNavigatorProps {
@@ -42,6 +42,10 @@ const DrawerNavigator: FC<DrawerNavigatorProps> = ({ navigation }) => {
       <Drawer.Screen
         name="Signup"
         component={SignupScreen} />
+
+      <Drawer.Screen
+        name="<dev-only> Onboarding"
+        component={OnboardingScreen} />
     </Drawer.Navigator>
   );
 };
