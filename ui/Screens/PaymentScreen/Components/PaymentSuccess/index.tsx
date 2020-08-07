@@ -1,8 +1,20 @@
-import React, { FC } from 'react';
-import { View, Text, Modal, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
+import React, { FC } from "react";
 
-import * as COLORS from '../../../../Constants/colors';
-import { Neumorphic } from '../../../../Components';
+import { 
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+  Modal,
+  View,
+  Text
+} from "react-native";
+
+import {
+  Neumorphic
+} from "../../../../Components";
+
+import * as COLORS from "../../../../Constants/colors";
+import Success from "./success.svg";
 
 interface PaymentSuccessProps {
   visibility: boolean,
@@ -27,7 +39,7 @@ const PaymentSuccess: FC<PaymentSuccessProps> =
       <ScrollView contentContainerStyle={{alignItems: 'center'}}>
 
         <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 30, marginBottom: 25}}>
-          <Image source={require('./success.png')} />
+          <Success />
           <Text style={S.title}> Payment Success </Text>
         </View>
 

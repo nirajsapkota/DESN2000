@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { SafeAreaView, View, Text, StyleSheet, Switch, Image, TextInput, DatePickerIOS } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, Switch, Image, TextInput, DatePickerIOS, KeyboardAvoidingView } from 'react-native';
 import { Header } from '../../Components';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -39,11 +39,14 @@ const AccountScreen: FC<AccountScreenProps> = ({ navigation }) => {
   return (
     <SafeAreaView>
 
+    <KeyboardAvoidingView
+      behavior="position">
     <Header navigation={navigation} />
     
+        
     <View style={STYLES.container}>
 
-        <Text style={STYLES.title}> My account </Text>
+      <Text style={STYLES.title}> My account </Text>
 
       <View style={S.profileContainer}>
         <Image style={S.profileImage} source={require('../../assets/hidethepainharold.jpg')} />
@@ -83,10 +86,6 @@ const AccountScreen: FC<AccountScreenProps> = ({ navigation }) => {
       <View style={S.row}>
         <Text style={S.subsubtitle}> Date of Birth </Text>
         <View style={S.textEditContainer}>
-
-        {/* <DatePickerIOS 
-          date={new Date()}
-          /> */}
 
         <DatePicker
           style={{width: 175}}
@@ -134,6 +133,7 @@ const AccountScreen: FC<AccountScreenProps> = ({ navigation }) => {
           />
       </View>
     </View>
+    </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

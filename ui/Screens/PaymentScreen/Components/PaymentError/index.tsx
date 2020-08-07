@@ -4,6 +4,8 @@ import { View, Text, Modal, StyleSheet, Image, TouchableOpacity, ScrollView } fr
 import * as COLORS from '../../../../Constants/colors';
 import { Neumorphic } from '../../../../Components';
 
+import Error from "./error.svg";
+
 interface PaymentErrorProps {
   visibility: boolean,
   setVisibility: Function,
@@ -25,7 +27,7 @@ const PaymentError: FC<PaymentErrorProps> =
       <ScrollView contentContainerStyle={{alignItems: 'center'}}>
 
         <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 30, marginBottom: 25}}>
-          <Image source={require('./error.png')} />
+          <Error />
           <Text style={S.title}> Payment Error </Text>
         </View>
 

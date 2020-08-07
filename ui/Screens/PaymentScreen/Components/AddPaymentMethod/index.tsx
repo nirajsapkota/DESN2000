@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { View, TextInput, Modal, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, TextInput, Modal, Text, StyleSheet, TouchableOpacity, Image, ScrollView, KeyboardAvoidingView } from 'react-native';
 
 import * as COLORS from '../../../../Constants/colors';
 import { Neumorphic } from '../../../../Components';
@@ -25,9 +25,12 @@ const AddPaymentMethod: FC<AddPaymentMethodProps> =
       animationType="none"
       transparent={true}
       visible={visibility}>
-
-      <View style={S.darkOverlay}>
-      <View style={S.positioningContainer}>
+      
+        
+      <View style={[S.darkOverlay, {flex: 1}]}>
+      <View style={[S.positioningContainer, {flexGrow: 1}]}>
+      <KeyboardAvoidingView
+        behavior="padding">
       <View style={S.bottomModal}>
 
       <ScrollView contentContainerStyle={{alignItems: "center"}}>
@@ -101,6 +104,7 @@ const AddPaymentMethod: FC<AddPaymentMethodProps> =
       </ScrollView>
 
       </View>    
+      </KeyboardAvoidingView>
       </View>
       </View>
   
@@ -113,18 +117,19 @@ export default AddPaymentMethod;
 const S = StyleSheet.create({
   darkOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)'
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   positioningContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   bottomModal: {
     backgroundColor: COLORS.PRIMARY,
-    width: "100%",
+    width: 413,
     height: 525,
-    borderRadius: 30
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30
   },
   title: {
     fontFamily: 'Arial Rounded MT Bold',

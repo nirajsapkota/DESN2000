@@ -138,7 +138,7 @@ const FeedbackMessages = [
 
 const BugReportMessages = [
   { id: -1, message: "Hi, leave us a message and we'll respond as soon as possible." },
-  { id: 1234, message: "You guys should add support for locking and unlocking opal cards on demand." },
+  { id: 1234, message: "Cross platform cloud saves aren't working on my phone." },
   { id: -1, message: "That's strange -- can you provide us with more details e.g. which device you are using, the specific issue and when it occurs. Thanks!" },
 ];
 

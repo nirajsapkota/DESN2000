@@ -1,37 +1,47 @@
-import React, { FC } from 'react';
-import { SafeAreaView, ScrollView, Text, StyleSheet } from 'react-native';
-import { Header, OpalCardSelector, Trips, News } from '../../Components';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-import STYLES from '../../styles';
+import React, { FC } from "react";
+import { createStackNavigator } from '@react-navigation/stack';
 
-interface HomeScreenProps {
-  navigation: DrawerNavigationProp<any, any>
-};
+import {
+  ViewTripJourneys,
+  ViewJourneyServices,
+  AccessibilityInformation
+} from "../../Components";
 
-const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
+import {
+  MainStack,
+  NewsListStack,
+  NewsArticleStack
+} from "./Stacks";
+
+const Stack = createStackNavigator();
+const HomeScreen: FC = () => {
   return (
-    <SafeAreaView>
-      <Header navigation={navigation} />
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={MainStack} />
 
-      <ScrollView contentContainerStyle={STYLES.container}>
-        
-        <Text style={STYLES.title}> Home </Text>
-        <Text style={[STYLES.subtitle, {marginTop: 15}]}> Your cards </Text>
-        <OpalCardSelector />
+      <Stack.Screen
+        name="Latest News"
+        component={NewsListStack} />
 
-        <Text style={[STYLES.subtitle, {marginTop: 15}]}> Pinned trips </Text>
-        <Trips navigation={navigation} pinned />
+      <Stack.Screen
+        name="News Article"
+        component={NewsArticleStack} />
 
-        <Text style={[STYLES.subtitle, {marginTop: 15}]}> News </Text>
-        <News preview />
+      <Stack.Screen
+        name="View Trip Journeys"
+        component={ViewTripJourneys} />
 
-      </ScrollView>
-   
-    </SafeAreaView>
+      <Stack.Screen
+        name="View Journey Services"
+        component={ViewJourneyServices} />
+      
+      <Stack.Screen
+        name="Accessibility Information"
+        component={AccessibilityInformation} />
+    </Stack.Navigator>
   );
 }
 
 export default HomeScreen;
-
-const S = StyleSheet.create({
-});

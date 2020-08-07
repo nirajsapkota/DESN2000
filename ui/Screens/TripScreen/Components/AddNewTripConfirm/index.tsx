@@ -119,10 +119,12 @@ const AddNewTripConfirm: FC<AddNewTripConfirmProps> = ({ navigation, route }) =>
             />
           </View>
         </View>
-
+ 
         {/* Finish */}
         <View style={{alignItems: 'center', marginTop: 25}}>
-          <TouchableOpacity onPress={() => console.log("nothing yet")}>
+          <TouchableOpacity onPress={() => navigation.navigate("View Trip Journeys", {
+            origin: origin.name.replace(" Light Rail", ""), destination: destination.name.replace(" Light Rail", "")
+          })}>
             <Neumorphic width={280} height={50} background={COLORS.ACCENT}
               radius={500} centered >
                 <Text style={[STYLES.subtitle, {color: 'white'}]}> Finish </Text>
