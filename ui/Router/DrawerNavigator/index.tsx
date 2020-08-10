@@ -6,12 +6,9 @@ import {
   TalkToUsScreen, SettingsSecurityScreen, LoginScreen, SignupScreen, OnboardingScreen
 } from '../../Screens';
 
-interface DrawerNavigatorProps {
-  navigation: any
-}
 
 const Drawer = createDrawerNavigator();
-const DrawerNavigator: FC<DrawerNavigatorProps> = ({ navigation }) => {
+const DrawerNavigator: FC = () => {
 
   return (
     <Drawer.Navigator initialRouteName="Dashboard">
