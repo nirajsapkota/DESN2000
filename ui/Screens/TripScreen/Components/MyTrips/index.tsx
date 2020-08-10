@@ -35,7 +35,7 @@ const MyTrips: FC<MyTripsProps> = ({ navigation }) => {
       
       <ScrollView contentContainerStyle={STYLES.container}>
 
-        <View style={[STYLES.row, {alignItems: 'center', justifyContent: 'space-between', width: defaultWidth}]}>
+        <View style={[STYLES.row, {alignItems: 'center', justifyContent: 'space-between', width: viewableIphone5Width}]}>
           
           <Text style={STYLES.title}> Trips </Text>
           

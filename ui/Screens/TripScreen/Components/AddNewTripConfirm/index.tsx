@@ -161,6 +161,7 @@ const AddNewTripConfirm: FC<AddNewTripConfirmProps> = ({ navigation, route }) =>
                 navigation.navigate("View Trip Journeys", {
                   origin: origin.name.replace(" Light Rail", ""), destination: destination.name.replace(" Light Rail", "")
                 })
+                console.log("Temp trip")
                 return;
               }
               addTrip(tripKey)
