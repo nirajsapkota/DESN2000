@@ -15,7 +15,7 @@ import React, { FC, useState } from 'react';
 import { SafeAreaView, TouchableOpacity, View, Text, StyleSheet, Image } from 'react-native';
 import { Header, Neumorphic } from '../../Components';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import Swiper from 'react-native-swiper'
+import Swiper from 'react-native-swiper';
 import Logo from "./Logo.svg";
 import * as COLORS from '../../Constants/colors';
 

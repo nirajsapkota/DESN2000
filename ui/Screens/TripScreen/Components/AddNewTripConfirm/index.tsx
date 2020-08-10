@@ -21,6 +21,8 @@ import {
 
 import * as COLORS from '../../../../Constants/colors';
 import STYLES from '../../../../styles';
+import AsyncStorage from '@react-native-community/async-storage';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type ParamList = {
   origin: {
@@ -47,92 +49,139 @@ const AddNewTripConfirm: FC<AddNewTripConfirmProps> = ({ navigation, route }) =>
   const [pinTrip, setPinTrip] = useState(false);
   const [tripNotifications, setTripNotifications] = useState(false);
   const [temporaryTrip, setTemporaryTrip] = useState(false);
+  //if temp and pinned?
+  const tripKey  = pinTrip ? "@pinned_trips" : "@unpinned_trips";
+  //  { id: 2, method: "LR", disabilityRating: "POOR", origin: "UNSW Anzac Parade", destination: "Haymarket"}
+
+  const SaveTrip = async (key: string, value: Array<any>) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem(key, jsonValue);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const addTrip = async (key:string) => {
+    try {
+      const jsonValue = await AsyncStorage.getItem(key)
+      //gets a string
+      const trips =  jsonValue != null ? JSON.parse(jsonValue) : null;
+      var id = Object.keys(trips).length;
+      // console.log(trips);
+      if (trips){
+        //assume it is a JSONArray
+        trips.push({id: id, method: "LR", disabilityRating: "OK", origin:origin.name, destination:destination.name});
+      } 
+      // console.log(trips);
+
+      return trips;
+    } catch(err) {
+      console.log(err);
+    }
+  }
 
   return (
     <SafeAreaView style={{flex: 1}}>
       <Header navigation={navigation} />
-      <View style={STYLES.container}>
 
-        {/* Origin Station */}
-        <Text style={STYLES.title}> Add a New Trip </Text>
+      <ScrollView contentContainerStyle={STYLES.container}>
+        <View style={STYLES.container}>
 
-        <Text style={[STYLES.subtitle, {marginTop: 15}]}> From </Text> 
-        <TouchableOpacity onPress={() => console.log("nothing yet")}>
-          <Neumorphic width={375} height={55} background={COLORS.PRIMARY}
-            radius={10} style={{marginTop: 15}} >
-            <View style={[STYLES.row, {alignItems: 'center'}]}>
+          {/* Origin Station */}
+          <Text style={STYLES.title}> Add a New Trip </Text>
+
+          <Text style={[STYLES.subtitle, {marginTop: 15}]}> From </Text> 
+          <TouchableOpacity onPress={() => console.log("nothing yet")}>
+            <Neumorphic width={375} height={55} background={COLORS.PRIMARY}
+              radius={10} style={{marginTop: 15}} >
+              <View style={[STYLES.row, {alignItems: 'center'}]}>
+                
+                <View style={{left: 20, width: 345}}>
+                  <Text style={S.title}> {origin.name} </Text>
+                  <Text style={S.subtitle}> {origin.suburb} </Text>
+                </View>
+
+                <View>
+                  <Image source={require('./chevron-forward.png')} />
+                </View>
               
-              <View style={{left: 20, width: 345}}>
-                <Text style={S.title}> {origin.name} </Text>
-                <Text style={S.subtitle}> {origin.suburb} </Text>
               </View>
-
-              <View>
-                <Image source={require('./chevron-forward.png')} />
-              </View>
-            
-            </View>
-          </Neumorphic>
-        </TouchableOpacity>
-
-        {/* Destination Station */}
-        <Text style={[STYLES.subtitle, {marginTop: 15}]}> To </Text> 
-        <TouchableOpacity onPress={() => console.log("nothing yet")}>
-          <Neumorphic width={375} height={55} background={COLORS.PRIMARY}
-            radius={10} style={{marginTop: 15}} >
-            <View style={[STYLES.row, {alignItems: 'center'}]}>
-
-              <View style={{left: 20, width: 345}}>
-                <Text style={S.title}> {destination.name} </Text>
-                <Text style={S.subtitle}> {destination.suburb} </Text>
-              </View>
-
-              <View>
-                <Image source={require('./chevron-forward.png')} />
-              </View>
-            </View>
-          
-          </Neumorphic>
-        </TouchableOpacity>
-
-        {/* Options */}
-        <View style={{marginTop: 25}}>
-          <View style={[STYLES.row, {alignItems: 'center', justifyContent: 'space-between', marginTop: 15}]}>
-            <Text style={[STYLES.subtitle, {color: 'black'}]}> Pin trip </Text>
-            <Switch
-              onValueChange={() => setPinTrip(!pinTrip)}
-              value={pinTrip}
-            />
-          </View>
-          <View style={[STYLES.row, {alignItems: 'center', justifyContent: 'space-between', marginTop: 15}]}>
-            <Text style={[STYLES.subtitle, {color: 'black'}]}> Notifications for delays and cancellations </Text>
-            <Switch
-              onValueChange={() => setTripNotifications(!tripNotifications)}
-              value={tripNotifications}
-            />
-          </View>
-          <View style={[STYLES.row, {alignItems: 'center', justifyContent: 'space-between', marginTop: 15}]}>
-            <Text style={[STYLES.subtitle, {color: 'black'}]}> Temporary </Text>
-            <Switch
-              onValueChange={() => setTemporaryTrip(!temporaryTrip)}
-              value={temporaryTrip}
-            />
-          </View>
-        </View>
- 
-        {/* Finish */}
-        <View style={{alignItems: 'center', marginTop: 25}}>
-          <TouchableOpacity onPress={() => navigation.navigate("View Trip Journeys", {
-            origin: origin.name.replace(" Light Rail", ""), destination: destination.name.replace(" Light Rail", "")
-          })}>
-            <Neumorphic width={280} height={50} background={COLORS.ACCENT}
-              radius={500} centered >
-                <Text style={[STYLES.subtitle, {color: 'white'}]}> Finish </Text>
             </Neumorphic>
           </TouchableOpacity>
-        </View>
 
-      </View>
+          {/* Destination Station */}
+          <Text style={[STYLES.subtitle, {marginTop: 15}]}> To </Text> 
+          <TouchableOpacity onPress={() => console.log("nothing yet")}>
+            <Neumorphic width={375} height={55} background={COLORS.PRIMARY}
+              radius={10} style={{marginTop: 15}} >
+              <View style={[STYLES.row, {alignItems: 'center'}]}>
+
+                <View style={{left: 20, width: 345}}>
+                  <Text style={S.title}> {destination.name} </Text>
+                  <Text style={S.subtitle}> {destination.suburb} </Text>
+                </View>
+
+                <View>
+                  <Image source={require('./chevron-forward.png')} />
+                </View>
+              </View>
+            
+            </Neumorphic>
+          </TouchableOpacity>
+
+          {/* Options */}
+          <View style={{marginTop: 25}}>
+            <View style={[STYLES.row, {alignItems: 'center', justifyContent: 'space-between', marginTop: 15}]}>
+              <Text style={[STYLES.subtitle, {color: 'black'}]}> Pin trip </Text>
+              <Switch
+                onValueChange={() => setPinTrip(!pinTrip)}
+                value={pinTrip}
+              />
+            </View>
+            <View style={[STYLES.row, {alignItems: 'center', justifyContent: 'space-between', marginTop: 15}]}>
+              <Text style={[STYLES.subtitle, {color: 'black'}]}> Notifications for delays and cancellations </Text>
+              <Switch
+                onValueChange={() => setTripNotifications(!tripNotifications)}
+                value={tripNotifications}
+              />
+            </View>
+            <View style={[STYLES.row, {alignItems: 'center', justifyContent: 'space-between', marginTop: 15}]}>
+              <Text style={[STYLES.subtitle, {color: 'black'}]}> Temporary </Text>
+              <Switch
+                onValueChange={() => setTemporaryTrip(!temporaryTrip)}
+                value={temporaryTrip}
+              />
+            </View>
+          </View>
+  
+          {/* Finish */}
+          <View style={{alignItems: 'center', marginTop: 25}}>
+            <TouchableOpacity onPress={() => {
+              if(temporaryTrip){
+                navigation.navigate("View Trip Journeys", {
+                  origin: origin.name.replace(" Light Rail", ""), destination: destination.name.replace(" Light Rail", "")
+                })
+                return;
+              }
+              addTrip(tripKey)
+              .then(response => 
+                SaveTrip(tripKey,response)
+              ).then(response => 
+                navigation.navigate("View Trip Journeys", {
+                  origin: origin.name.replace(" Light Rail", ""), destination: destination.name.replace(" Light Rail", "")
+                })
+              );
+            }
+            }>
+              <Neumorphic width={280} height={50} background={COLORS.ACCENT}
+                radius={500} centered >
+                  <Text style={[STYLES.subtitle, {color: 'white'}]}> Finish </Text>
+              </Neumorphic>
+            </TouchableOpacity>
+          </View>
+
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 
@@ -204,3 +253,55 @@ const stops = [
   { id: 39, name: "Kingsford Light Rail", suburb: "Kingsford" },
   { id: 40, name: "Juniors Kingsford Light Rail", suburb: "Kingsford" }
 ];
+
+
+
+
+///TRIPS data
+// Array [
+//   Object {
+//     "destination": "Marion",
+//     "disabilityRating": "OK",
+//     "id": 3,
+//     "method": "LR",
+//     "origin": "Wynyard",
+//   },
+//   Object {
+//     "destination": "Exhibition Centre",
+//     "disabilityRating": "GOOD",
+//     "id": 4,
+//     "method": "LR",
+//     "origin": "Rozelle Bay",
+//   },
+// ]
+// Array [
+//   Object {
+//     "destination": "Marion",
+//     "disabilityRating": "OK",
+//     "id": 3,
+//     "method": "LR",
+//     "origin": "Wynyard",
+//   },
+//   Object {
+//     "destination": "Exhibition Centre",
+//     "disabilityRating": "GOOD",
+//     "id": 4,
+//     "method": "LR",
+//     "origin": "Rozelle Bay",
+//   },
+//   Object {
+//     "destination": Object {
+//       "id": 21,
+//       "name": "Bridge Street Light Rail",
+//       "suburb": "Sydney",
+//     },
+//     "disabilityRating": "OK",
+//     "id": 2,
+//     "method": "LR",
+//     "origin": Object {
+//       "id": 2,
+//       "name": "Arlington Light Rail",
+//       "suburb": "Dulwich Hill",
+//     },
+//   },
+// ]
