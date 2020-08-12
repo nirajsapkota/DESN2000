@@ -1,9 +1,21 @@
 import React, { FC, useState } from 'react';
-import { View, Text, Modal, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
 
-import * as COLORS from '../../Constants/colors';
-import { Neumorphic } from '../../Components';
+import { 
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  Image,
+  View,
+  Text
+} from "react-native";
 
+import { 
+  Neumorphic
+} from "../../Components";
+
+import * as COLORS from "../../Constants/colors";
 import TransportLogo from "./Logo.svg";
 
 interface LoginScreenProps {
@@ -13,24 +25,21 @@ interface LoginScreenProps {
 };
 
 const LoginScreen: FC<LoginScreenProps> = 
-  ({ navigation, visibility, setVisibility }) => {
+  ({ navigation }) => {
   
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   return (
-    <Modal
-      animationType="none"
-      transparent={true}
-      visible={visibility}>
-
-      <View style={S.darkOverlay}>
-      <View style={S.positioningContainer}>
+      <ScrollView contentContainerStyle={[S.darkOverlay, {flexGrow: 1}]}>
+      <View style={[S.positioningContainer,  {flexGrow: 1}]}>
+      <KeyboardAvoidingView
+        behavior="position">
       <View style={S.centeredModal}>
           
           <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}}>
             <TransportLogo width={220} height={60} />
-            <TouchableOpacity onPress={() => {navigation.navigate('Dashboard'); setVisibility(false)}}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
               <Image source={require('./close.png')} style={{marginTop: 12.5}} />
             </TouchableOpacity>
           </View>
@@ -58,7 +67,7 @@ const LoginScreen: FC<LoginScreenProps> =
 
           <View style={{alignItems: 'center'}}>
             <TouchableOpacity
-              onPress={() => console.log("Logging in...")}>
+              onPress={() => navigation.navigate("Dashboard")}>
               <Neumorphic
                 width={280}
                 height={50}
@@ -70,10 +79,10 @@ const LoginScreen: FC<LoginScreenProps> =
             </TouchableOpacity>
           </View>
       
-      </View>    
       </View>
+      </KeyboardAvoidingView>    
       </View>
-    </Modal>
+      </ScrollView>
   );
 
 }

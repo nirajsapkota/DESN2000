@@ -25,6 +25,9 @@ interface MyTripsProps {
   navigation: any
 }
 
+const viewableIphone5Width = 310;
+const defaultWidth = 355;
+
 const MyTrips: FC<MyTripsProps> = ({ navigation }) => {
   return (
     <SafeAreaView>
@@ -32,7 +35,7 @@ const MyTrips: FC<MyTripsProps> = ({ navigation }) => {
       
       <ScrollView contentContainerStyle={STYLES.container}>
 
-        <View style={[STYLES.row, {alignItems: 'center', justifyContent: 'space-between', width: 355}]}>
+        <View style={[STYLES.row, {alignItems: 'center', justifyContent: 'space-between', width: viewableIphone5Width}]}>
           
           <Text style={STYLES.title}> Trips </Text>
           

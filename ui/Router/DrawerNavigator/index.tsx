@@ -7,12 +7,12 @@ import {
 } from '../../Screens';
 
 interface DrawerNavigatorProps {
-  navigation: any,
   initialRouteName: string,
 }
 
 const Drawer = createDrawerNavigator();
-const DrawerNavigator: FC<DrawerNavigatorProps> = ({ navigation, initialRouteName }) => {
+const DrawerNavigator: FC<DrawerNavigatorProps> = ({ initialRouteName }) => {
+
   return (
     <Drawer.Navigator initialRouteName={initialRouteName}>
       <Drawer.Screen

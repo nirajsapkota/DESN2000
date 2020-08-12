@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { View, Text, Modal, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
+import { View, Text, Modal, StyleSheet, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView } from 'react-native';
 
 import * as COLORS from '../../Constants/colors';
 import { Neumorphic } from '../../Components';
@@ -8,12 +8,10 @@ import TransportLogo from "./Logo.svg";
 
 interface SignupScreenProps {
   navigation: any,
-  visibility: boolean,
-  setVisibility: Function,
 }
 
 const SignupScreen: FC<SignupScreenProps> =
-  ({ navigation, visibility, setVisibility }) => {
+  ({ navigation }) => {
   
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -22,88 +20,86 @@ const SignupScreen: FC<SignupScreenProps> =
   const [location, setLocation] = useState("");
 
   return (
-    <Modal
-      animationType="none"
-      transparent={true}
-      visible={visibility}>
-
-      <View style={S.darkOverlay}>
-      <View style={S.positioningContainer}>
+      <View style={[S.darkOverlay, {flex: 1}]}>
+      <View style={[S.positioningContainer,  {flexGrow: 1}]}>
+      <KeyboardAvoidingView
+        behavior="position">
       <View style={S.centeredModal}>
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginBottom: 20}}>
-          <TransportLogo width={220} height={60} />
-          <TouchableOpacity onPress={() => {navigation.navigate('Dashboard'); setVisibility(false);}}>
-            <Image source={require('./close.png')} style={{marginTop: 12.5}} />
-          </TouchableOpacity>
-        </View>
+      
+          <View style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: 20}}>
+            <TransportLogo width={220} height={60} />
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Image source={require('./close.png')} style={{marginTop: 12.5}} />
+            </TouchableOpacity>
+          </View>
+          
+          <View style={{marginTop: 15, marginBottom: 15}}>
+            <View style={{width: 270, marginBottom: 25}}>
+              <Text style={S.title}>Welcome aboard.</Text>
+            </View>
 
-        <View style={{marginTop: 15, marginBottom: 15}}>
-          <View style={{width: 270, marginBottom: 25}}>
-            <Text style={S.title}>Welcome aboard.</Text>
+            <Text style={S.subtitle}> Email </Text>
+            <TextInput
+              style={S.textbox}
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+              placeholder="e.g. janecitizen@goodcitizen.com" />
+
+            <Text style={S.subtitle}> Username </Text>
+            <TextInput
+              style={S.textbox}
+              value={username}
+              onChangeText={(text) => setUsername(text)}
+              placeholder="e.g. janecitizen" />
+
+            <Text style={S.subtitle}> Password </Text>
+            <TextInput
+              secureTextEntry={true}
+              style={S.textbox}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+              textContentType="password"
+              placeholder="*************" />
+
+            <Text style={S.subtitle}> Confirm password </Text>
+            <TextInput
+              secureTextEntry={true}
+              style={S.textbox}
+              value={confirmPassword}
+              onChangeText={(text) => setConfirmPassword(text)}
+              textContentType="password"
+              placeholder="*************" />
+
+            <Text style={S.subtitle}> Location </Text>
+            <TextInput
+              style={S.textbox}
+              value={location}
+              onChangeText={(text) => setLocation(text)}
+              placeholder="e.g. Sydney, NSW" />
           </View>
 
-          <Text style={S.subtitle}> Email </Text>
-          <TextInput
-            style={S.textbox}
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-            placeholder="e.g. janecitizen@goodcitizen.com" />
-
-          <Text style={S.subtitle}> Username </Text>
-          <TextInput
-            style={S.textbox}
-            value={username}
-            onChangeText={(text) => setUsername(text)}
-            placeholder="e.g. janecitizen" />
-
-          <Text style={S.subtitle}> Password </Text>
-          <TextInput
-            secureTextEntry={true}
-            style={S.textbox}
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            textContentType="password"
-            placeholder="*************" />
-
-          <Text style={S.subtitle}> Confirm password </Text>
-          <TextInput
-            secureTextEntry={true}
-            style={S.textbox}
-            value={confirmPassword}
-            onChangeText={(text) => setConfirmPassword(text)}
-            textContentType="password"
-            placeholder="*************" />
-
-          <Text style={S.subtitle}> Location </Text>
-          <TextInput
-            style={S.textbox}
-            value={location}
-            onChangeText={(text) => setLocation(text)}
-            placeholder="e.g. Sydney, NSW" />
+          <View style={{alignItems: 'center'}}>
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}>
+              <Neumorphic
+                width={280}
+                height={50}
+                radius={500}
+                background={COLORS.ACCENT}
+                centered>
+                <Text style={S.btnText}>Join</Text>
+              </Neumorphic>          
+            </TouchableOpacity>
         </View>
-
-        <View style={{alignItems: 'center'}}>
-          <TouchableOpacity
-            onPress={() => console.log("Logging in...")}>
-            <Neumorphic
-              width={280}
-              height={50}
-              radius={500}
-              background={COLORS.ACCENT}
-              centered>
-              <Text style={S.btnText}>Join</Text>
-            </Neumorphic>          
-          </TouchableOpacity>
-        </View>
-      </View>    
+        
+      </View>
+      </KeyboardAvoidingView>
       </View>
       </View>
-
-    </Modal>
   );
 
 }
@@ -117,8 +113,8 @@ const S = StyleSheet.create({
   },
   positioningContainer: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center"
   },
   centeredModal: {
     backgroundColor: COLORS.PRIMARY,

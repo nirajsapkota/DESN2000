@@ -7,7 +7,9 @@ interface TopUpAmountSelectProps {
   setTopUpAmount: Function
 }
 
-const TopUpAmountSelect: FC<TopUpAmountSelectProps> = ({ topUpAmount, setTopUpAmount }) => {
+const TopUpAmountSelect: FC<TopUpAmountSelectProps> =
+  ({ topUpAmount, setTopUpAmount }) => {
+  
   return (
     <View style={{marginTop: 15, marginBottom: 15}}>
 

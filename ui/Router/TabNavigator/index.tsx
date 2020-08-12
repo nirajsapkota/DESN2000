@@ -103,6 +103,7 @@ const TabNavigator = () => {
       tabBarOptions={{
         /* Set the background color and increase chin size */
         style: {
+          paddingTop: 15,
           backgroundColor: COLORS.PRIMARY,
           height: 100
         },

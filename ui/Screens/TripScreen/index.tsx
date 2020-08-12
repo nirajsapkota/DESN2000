@@ -7,7 +7,9 @@ import {
 } from './Components';
 
 import {
-  ViewTripJourneys
+  ViewTripJourneys,
+  ViewJourneyServices,
+  AccessibilityInformation
 } from '../../Components';
 
 const Stack = createStackNavigator();
@@ -33,6 +35,14 @@ const TripScreen: FC = () => {
       <Stack.Screen
         name="View Trip Journeys"
         component={ViewTripJourneys} />
+
+      <Stack.Screen
+        name="View Journey Services"
+        component={ViewJourneyServices} />
+
+      <Stack.Screen
+        name="Accessibility Information"
+        component={AccessibilityInformation} />
     </Stack.Navigator>
   );
 }

@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import Neumorphic from '../Neumorphic';
+import AsyncStorage from "@react-native-community/async-storage";
 
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { DisabilityRating } from './Components';
@@ -20,16 +21,32 @@ const pinnedTripData = [
   { id: 2, method: "LR", disabilityRating: "POOR", origin: "UNSW Anzac Parade", destination: "Haymarket"}
 ];
 
-const unpinnedTripData = [
-  { id: 3, method: "LR", disabilityRating: "OK", origin: "Wynyard", destination: "Marion"},
-  { id: 4, method: "LR", disabilityRating: "GOOD", origin: "Rozelle Bay", destination: "Exhibition Centre"}
-];
+
+const GetData = async (key: string) => {
+  try {
+    const jsonValue = await AsyncStorage.getItem(key)
+    return jsonValue != null ? JSON.parse(jsonValue) : null;
+  } catch(err) {
+    console.log(err);
+  }
+}
 
 const Trips: FC<Props> = ({ navigation, pinned }) => {
   
-  var TripData;
-  pinned ? TripData = [...pinnedTripData] : TripData = [...unpinnedTripData];
-  
+  const [TripData, setTripData] = useState([]);
+
+  if (pinned) {
+    GetData("@pinned_trips")
+    .then(response => {
+      setTripData(response);
+    })
+  } else {
+    GetData("@unpinned_trips")
+    .then(response => {
+      setTripData(response);
+    })
+  }
+
   return (
     <View style={{alignItems: 'center'}}>
     {TripData.map(item =>
