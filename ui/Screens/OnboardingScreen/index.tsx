@@ -12,7 +12,7 @@
  */
 
 import React, { FC, useState } from 'react';
-import { SafeAreaView, TouchableOpacity, View, Text, StyleSheet, Image } from 'react-native';
+import { SafeAreaView, TouchableOpacity, View, Text, StyleSheet, Image, AsyncStorage } from 'react-native';
 import { Header, Neumorphic } from '../../Components';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import Swiper from 'react-native-swiper'
@@ -21,12 +21,19 @@ import * as COLORS from '../../Constants/colors';
 
 import STYLES from '../../styles';
 import { ScrollView } from 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
 
 interface OnboardingScreenProps {
     navigation: DrawerNavigationProp<any, any>
 };
 
 const OnboardingScreen: FC<OnboardingScreenProps> = ({ navigation }) => {
+    // From https://medium.com/@SunnyChopper/how-to-quickly-create-an-onboarding-swiper-sequence-in-your-react-native-app-6e3046448917.
+    const completeOnboarding = async () => {
+        await AsyncStorage.setItem('hasOnboarded', JSON.stringify({ hasOnboarded: true }));
+        navigation.navigate('Dashboard');
+    }
+
     return (
         <Swiper style={S.container} index={0} loop={false}>
             <SafeAreaView style={S.slide}>
@@ -53,7 +60,7 @@ const OnboardingScreen: FC<OnboardingScreenProps> = ({ navigation }) => {
                 </View>
 
                 <View style={S.skipContainer}>
-                    <TouchableOpacity style={S.skipButton} onPress={() => navigation.navigate("Home")}>
+                    <TouchableOpacity style={S.skipButton} onPress={() => completeOnboarding()}>
                         <Neumorphic width={60} height={40} radius={15} background={COLORS.PRIMARY} centered >
                             <Text>Skip</Text>
                         </Neumorphic>
@@ -69,7 +76,7 @@ const OnboardingScreen: FC<OnboardingScreenProps> = ({ navigation }) => {
                 <Text style={S.subtitle}>Tap-on and off, top-up and manage cards you’ve scanned to your phone or attached to your account.</Text>
 
                 <View style={S.skipContainer}>
-                    <TouchableOpacity style={S.skipButton} onPress={() => navigation.navigate("Home")}>
+                    <TouchableOpacity style={S.skipButton} onPress={() => completeOnboarding()}>
                         <Neumorphic width={60} height={40} radius={15} background={COLORS.PRIMARY} centered >
                             <Text>Skip</Text>
                         </Neumorphic>
@@ -84,7 +91,7 @@ const OnboardingScreen: FC<OnboardingScreenProps> = ({ navigation }) => {
                 <Text style={S.title}>Plan your trip</Text>
                 <Text style={S.subtitle}>Get a guided tour from one address to another using the NSW transport network. </Text>
                 <View style={S.skipContainer}>
-                    <TouchableOpacity style={S.skipButton} onPress={() => navigation.navigate("Home")}>
+                    <TouchableOpacity style={S.skipButton} onPress={() => completeOnboarding()}>
                         <Neumorphic width={60} height={40} radius={15} background={COLORS.PRIMARY} centered >
                             <Text>Skip</Text>
                         </Neumorphic>
@@ -100,7 +107,7 @@ const OnboardingScreen: FC<OnboardingScreenProps> = ({ navigation }) => {
                 <Text style={S.subtitle}>Tap on any trip’s or stop’s accessibility icon to get detailed, real-time information on accessibility services available.</Text>
 
                 <View style={S.skipContainer}>
-                    <TouchableOpacity style={S.skipButton} onPress={() => navigation.navigate("Home")}>
+                    <TouchableOpacity style={S.skipButton} onPress={() => completeOnboarding()}>
                         <Neumorphic width={60} height={40} radius={15} background={COLORS.PRIMARY} centered >
                             <Text>Skip</Text>
                         </Neumorphic>
@@ -116,7 +123,7 @@ const OnboardingScreen: FC<OnboardingScreenProps> = ({ navigation }) => {
                 <Text style={S.subtitle}>Submit a request for assistance, and station staff will be there to help you with boarding, alighting and other emergencies.</Text>
 
                 <View style={S.skipContainer}>
-                    <TouchableOpacity style={S.skipButton} onPress={() => navigation.navigate("Home")}>
+                    <TouchableOpacity style={S.skipButton} onPress={() => completeOnboarding()}>
                         <Neumorphic width={60} height={40} radius={15} background={COLORS.PRIMARY} centered >
                             <Text>Finish</Text>
                         </Neumorphic>

@@ -7,14 +7,14 @@ import {
 } from '../../Screens';
 
 interface DrawerNavigatorProps {
-  navigation: any
+  navigation: any,
+  initialRouteName: string,
 }
 
 const Drawer = createDrawerNavigator();
-const DrawerNavigator: FC<DrawerNavigatorProps> = ({ navigation }) => {
-
+const DrawerNavigator: FC<DrawerNavigatorProps> = ({ navigation, initialRouteName }) => {
   return (
-    <Drawer.Navigator initialRouteName="Dashboard">
+    <Drawer.Navigator initialRouteName={initialRouteName}>
       <Drawer.Screen
         name="Dashboard"
         component={DashboardScreen} />
@@ -44,8 +44,9 @@ const DrawerNavigator: FC<DrawerNavigatorProps> = ({ navigation }) => {
         component={SignupScreen} />
 
       <Drawer.Screen
-        name="<dev-only> Onboarding"
-        component={OnboardingScreen} />
+        name="Onboarding"
+        component={OnboardingScreen}
+        />
     </Drawer.Navigator>
   );
 };
