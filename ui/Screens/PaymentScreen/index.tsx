@@ -1,8 +1,9 @@
 import React, { FC, useState } from 'react';
+import GooglePay from './google-pay-mark_800_gray.svg';
 
 import {
   TouchableOpacity, SafeAreaView, StyleSheet,
-  ScrollView, View, Text, Switch
+  ScrollView, View, Text, Switch, Image
 } from 'react-native';
 
 import {
@@ -28,6 +29,7 @@ interface PaymentScreenProps {
 
 const PaymentScreen: FC<PaymentScreenProps> = ({ navigation }) => {
 
+  const [blockCard, setBlockCard] = useState(false);
   const [autoTopup, setAutoTopup] = useState(false);
   const [successModalVisibility, setSuccessModalVisibility] = useState(false);
   const [errorModalVisibility, setErrorModalVisibility] = useState(false);
@@ -88,6 +90,13 @@ const PaymentScreen: FC<PaymentScreenProps> = ({ navigation }) => {
             onValueChange={() => setAutoTopup(!autoTopup)}
           />
         </View>
+        <View style={S.switchRow}>
+          <Text style={STYLES.subtitle}>Block card</Text>
+          <Switch
+            value={blockCard}
+            onValueChange={() => setBlockCard(!blockCard)}
+          />
+        </View>
 
         <Text style={[STYLES.subtitle, { marginTop: 15 }]}>
           Top up amount
@@ -141,6 +150,9 @@ const PaymentScreen: FC<PaymentScreenProps> = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
+        <Image style={S.paymentLogo} source={require('./apple-pay.png')} />
+        <GooglePay style={S.paymentLogo} width={80} />
+
       </ScrollView>
 
     </SafeAreaView>
@@ -155,5 +167,12 @@ const S = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: 18,
+  },
+  paymentLogo: {
+    width: 80,
+    height: 80,
+    alignSelf: "center",
+    textAlign: "center",
+    overflow: "visible"
   }
 });
