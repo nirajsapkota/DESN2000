@@ -14,8 +14,8 @@ const OpalCardSelector: FC<OpalCardSelectorProps>
   = ({ getActiveCardBalance, getActiveCardNickname }) => {
 
   const cards = [
-    { id: 0, owner: "Jane Citizen", type: "adult", balance: 5.32 },
-    { id: 1, owner: "John Citizen", type: "concession", balance: 25.47 }
+    { id: 0, owner: "Jane Citizen", type: "adult", balance: 5.32, autoTopup: false, blocked: false },
+    { id: 1, owner: "John Citizen", type: "concession", balance: 25.47, autoTopup: false, blocked: false }
   ];
   
   const [selectedCard, setSelectedCard] = useState(cards[0]);
@@ -67,8 +67,7 @@ const OpalCardSelector: FC<OpalCardSelectorProps>
                           </View>
                           <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                             <Text style={[S.title, {right: 5}]}> ${card.balance} </Text>
-                            { selectedCard.id === card.id ?
-                              <Image source={require('./radio-on.png')} />
+                            { selectedCard.id === card.id ? <Image source={require('./radio-on.png')} />
                               :
                               <Image source={require('./radio-off.png')} />
                             }
@@ -102,7 +101,7 @@ const OpalCardSelector: FC<OpalCardSelectorProps>
 
       <TouchableOpacity onPress={() => setModalVisisble(true)}>
         <Neumorphic width={335} height={65} background={COLORS.PRIMARY} radius={10}>
-          
+
           <View style={{flexDirection: 'row'}}>
             <View style={{alignItems: 'center', width: 100}}>
               <CardImage type={selectedCard.type} />   
@@ -130,6 +129,11 @@ const S = StyleSheet.create({
     fontFamily: 'Arial Rounded MT Bold',
     fontSize: 14,
     color: 'black'
+  },
+  imageCog: {
+    width: 25,
+    height: 25,
+    marginRight: 5,
   },
   subtitle: {
     fontFamily: 'Arial Rounded MT Bold',
