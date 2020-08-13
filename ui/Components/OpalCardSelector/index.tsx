@@ -5,13 +5,16 @@ import Neumorphic from '../Neumorphic';
 import * as COLORS from '../../Constants/colors';
 import STYLES from '../../styles';
 
+import CogIcon from "./cog.svg";
+
 interface OpalCardSelectorProps {
   getActiveCardBalance?: Function,
-  getActiveCardNickname?: Function
+  getActiveCardNickname?: Function,
+  navigation: any
 }
 
 const OpalCardSelector: FC<OpalCardSelectorProps> 
-  = ({ getActiveCardBalance, getActiveCardNickname }) => {
+  = ({ getActiveCardBalance, getActiveCardNickname, navigation }) => {
 
   const cards = [
     { id: 0, owner: "Jane Citizen", type: "adult", balance: 5.32, autoTopup: false, blocked: false },
@@ -41,10 +44,18 @@ const OpalCardSelector: FC<OpalCardSelectorProps>
             <View style={{backgroundColor: COLORS.PRIMARY, width: "100%", height: 350, borderRadius: 30}}>
 
               <View style={[STYLES.container, {flex: 1}]}>
+                <View style={{display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginVertical: 20}}>
+                  <Text style={[STYLES.subtitle, {color: 'black'}]}>
+                    Please select the card you would like to top up...
+                  </Text>
 
-                <Text style={[STYLES.subtitle, {color: 'black', marginVertical: 25, marginLeft: 25}]}>
-                  Please select the card you would like to top up...
-                </Text>
+                  <TouchableOpacity onPress={() => {
+                    setModalVisisble(false);
+                    navigation.navigate('Manage Transport Card')
+                  }}>
+                    <CogIcon width="32" height="32" />                      
+                  </TouchableOpacity>
+                </View>
 
                 <View style={{alignItems: 'center'}}>
                   {cards.map(card =>
@@ -98,7 +109,7 @@ const OpalCardSelector: FC<OpalCardSelectorProps>
         </View>
 
       </Modal>
-
+    
       <TouchableOpacity onPress={() => setModalVisisble(true)}>
         <Neumorphic width={335} height={65} background={COLORS.PRIMARY} radius={10}>
 
@@ -118,6 +129,7 @@ const OpalCardSelector: FC<OpalCardSelectorProps>
 
         </Neumorphic>
       </TouchableOpacity>
+
     </View>
   );
 }

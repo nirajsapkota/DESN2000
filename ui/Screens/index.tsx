@@ -10,9 +10,11 @@ import SettingsSecurityScreen from './SettingsSecurityScreen';
 import LoginScreen from './LoginScreen';
 import SignupScreen from './SignupScreen';
 import OnboardingScreen from './OnboardingScreen';
+import ManageTransportCardScreen from './ManageTransportCardScreen';
 
 export {
   HomeScreen, TripScreen, ActivityScreen, PaymentScreen, DashboardScreen,
   AccountScreen, AccessibilityEmergencyScreen, TalkToUsScreen,
-  SettingsSecurityScreen, LoginScreen, SignupScreen, OnboardingScreen
+  SettingsSecurityScreen, LoginScreen, SignupScreen, OnboardingScreen,
+  ManageTransportCardScreen
 };

@@ -12,6 +12,7 @@ import {
   NewsListStack,
   NewsArticleStack
 } from "./Stacks";
+import { ManageTransportCardScreen } from "..";
 
 const Stack = createStackNavigator();
 const HomeScreen: FC = () => {
@@ -40,6 +41,10 @@ const HomeScreen: FC = () => {
       <Stack.Screen
         name="Accessibility Information"
         component={AccessibilityInformation} />
+
+      <Stack.Screen
+        name="Manage Transport Card"
+        component={ManageTransportCardScreen} />
     </Stack.Navigator>
   );
 }

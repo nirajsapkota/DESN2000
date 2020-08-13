@@ -55,7 +55,7 @@ const App: FC = () => {
   return (  
     <NavigationContainer>
       <StatusBar barStyle="dark-content" />
-      <DrawerNavigator  initialRouteName={initialRouteName} />
+      <DrawerNavigator initialRouteName={initialRouteName} />
     </NavigationContainer>
   );
   

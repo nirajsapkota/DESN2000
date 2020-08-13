@@ -81,22 +81,8 @@ const PaymentScreen: FC<PaymentScreenProps> = ({ navigation }) => {
         </Text>
         <OpalCardSelector
           getActiveCardBalance={setCurrCardBalance}
-          getActiveCardNickname={setCurrCardNickname} />
-
-        <View style={S.switchRow}>
-          <Text style={STYLES.subtitle}>Auto-topup</Text>
-          <Switch
-            value={autoTopup}
-            onValueChange={() => setAutoTopup(!autoTopup)}
-          />
-        </View>
-        <View style={S.switchRow}>
-          <Text style={STYLES.subtitle}>Block card</Text>
-          <Switch
-            value={blockCard}
-            onValueChange={() => setBlockCard(!blockCard)}
-          />
-        </View>
+          getActiveCardNickname={setCurrCardNickname}
+          navigation={navigation} />
 
         <Text style={[STYLES.subtitle, { marginTop: 15 }]}>
           Top up amount
@@ -149,9 +135,6 @@ const PaymentScreen: FC<PaymentScreenProps> = ({ navigation }) => {
             </Neumorphic>
           </TouchableOpacity>
         </View>
-
-        <Image style={S.paymentLogo} source={require('./apple-pay.png')} />
-        <GooglePay style={S.paymentLogo} width={80} />
 
       </ScrollView>
 

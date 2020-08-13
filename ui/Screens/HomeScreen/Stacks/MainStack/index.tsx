@@ -28,7 +28,7 @@ const MainStack: FC<MainStackProps> = ({ navigation }) => {
         
         <Text style={STYLES.title}> Home </Text>
         <Text style={[STYLES.subtitle, {marginTop: 15}]}> Your cards </Text>
-        <OpalCardSelector />
+        <OpalCardSelector navigation={navigation} />
 
         <Text style={[STYLES.subtitle, {marginTop: 15}]}> Pinned trips </Text>
         <Trips navigation={navigation} pinned />
