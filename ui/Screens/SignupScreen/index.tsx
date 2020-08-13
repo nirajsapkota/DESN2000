@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { View, Text, Modal, StyleSheet, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { View, Text, Modal, StyleSheet, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Alert } from 'react-native';
 
 import * as COLORS from '../../Constants/colors';
 import { Neumorphic } from '../../Components';
@@ -18,11 +18,25 @@ const SignupScreen: FC<SignupScreenProps> =
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [location, setLocation] = useState("");
+  const [valid, setValid] = useState(true);
+
+  // Check signup form
+  function HandleRequest(): void {
+    let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    // Check for invalid email or passwords don't match
+    if ((regex.test(email) === false)) {
+        setValid(false);
+       
+    } else {
+      setValid(true);
+    }
+    
+  }
 
   return (
       <View style={[S.darkOverlay, {flex: 1}]}>
       <View style={[S.positioningContainer,  {flexGrow: 1}]}>
-      <KeyboardAvoidingView
+      <KeyboardAvoidingView keyboardVerticalOffset= {-100}
         behavior="position">
       <View style={S.centeredModal}>
       
@@ -84,7 +98,8 @@ const SignupScreen: FC<SignupScreenProps> =
 
           <View style={{alignItems: 'center'}}>
             <TouchableOpacity
-              onPress={() => navigation.goBack()}>
+              onPress={() => {HandleRequest;
+                             valid ? navigation.goBack() : null;}}>
               <Neumorphic
                 width={280}
                 height={50}

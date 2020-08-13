@@ -58,6 +58,7 @@ const LoginScreen: FC<LoginScreenProps> =
 
             <Text style={S.subtitle}> Password </Text>
             <TextInput
+              secureTextEntry={true}
               style={S.textbox}
               value={password}
               onChangeText={(text) => setPassword(text)}
