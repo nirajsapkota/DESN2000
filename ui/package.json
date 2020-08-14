@@ -49,6 +49,7 @@
     "@types/react-native-datepicker": "^1.7.0",
     "@types/react-native-svg-charts": "^5.0.3",
     "@types/react-test-renderer": "^16.9.3",
+    "babel-plugin-module-resolver": "^4.0.0",
     "typescript": "^3.9.7"
   },
   "private": true

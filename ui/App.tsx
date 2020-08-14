@@ -1,8 +1,7 @@
-import React, { FC, useState, useEffect } from 'react';
-import { StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { DrawerNavigator } from './Router';
-import { OnboardingScreen } from './Screens';
+import React, { FC, useState, useEffect } from "react";
+import { StatusBar } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { DrawerNavigator } from "./src/Router";
 import AsyncStorage from "@react-native-community/async-storage";
 
 console.disableYellowBox = true;

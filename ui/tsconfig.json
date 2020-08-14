@@ -9,7 +9,17 @@
     "moduleResolution": "node",
     "noEmit": true,
     "strict": true,
-    "target": "esnext"
+    "target": "esnext",
+    "baseUrl": "./src",
+    "paths": {
+      "_assets": ["./src/Assets"],
+      "_icons": ["./src/Assets/icons"],
+      "_images": ["./src/Assets/images"],
+      "_router": ["./src/Router"],
+      "_common_components": ["./src/Components"],
+      "_screens": ["./src/Screens"],
+      "_constants": ["./src/Constants"],
+    }
   },
   "exclude": [
     "node_modules",
