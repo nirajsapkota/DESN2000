@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 
 import {
   TouchableOpacity,
+  StyleSheet,
   View,
   Text
 } from "react-native";
@@ -9,6 +10,11 @@ import {
 import {
   Neumorphic
 } from "_common_components";
+
+import {
+  StoreData,
+  GetData
+} from "_utils";
 
 import {
   COLORS,
@@ -20,7 +26,6 @@ import {
 } from "./Components";
 
 import Swipeable from "react-native-gesture-handler/Swipeable";
-import AsyncStorage from "@react-native-community/async-storage";
 
 import ChevronForwardIcon from "_icons/chevron-forward.svg";
 import DeleteIcon from "_icons/delete.svg";
@@ -31,91 +36,60 @@ interface Props {
   pinned?: boolean
 };
 
-const StoreData = async (key: string, value: Array<any>) => {
-  try {
-    const jsonValue = JSON.stringify(value);
-    await AsyncStorage.setItem(key, jsonValue);
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-const GetData = async (key: string) => {
-  try {
-    const jsonValue = await AsyncStorage.getItem(key)
-    return jsonValue != null ? JSON.parse(jsonValue) : null;
-  } catch (err) {
-    console.log(err);
-  }
-}
-
 const Trips: FC<Props> = ({ navigation, pinned }) => {
 
   const [TripData, setTripData] = useState([]);
+  pinned ?
+    GetData("@pinned_trips").then((res: any) => setTripData(res)) :
+    GetData("@unpinned_trips").then((res: any) => setTripData(res));
 
-  if (pinned) {
-    GetData("@pinned_trips")
-      .then(response => {
-        setTripData(response);
-      })
-  } else {
-    GetData("@unpinned_trips")
-      .then(response => {
-        setTripData(response);
-      })
+  const DeleteTrip = (id: number) => {
+    const NewTripData = TripData.filter((trip: any) => trip.id != id);
+    pinned ?
+      StoreData("@pinned_trips", NewTripData) :
+      StoreData("@unpinned_trips", NewTripData);
+    setTripData(NewTripData);
   }
 
-  const DeleteItem = (id: number) => {
-    const newTripData = TripData.filter((trip: any) => trip.id != id);
-    
-    if (pinned)
-      StoreData("@pinned_trips", newTripData);
-    else
-      StoreData("@unpinned_trips", newTripData);
-
-    setTripData(newTripData);
-  }
-
-  const renderRightActions = (item_id: number) => {
+  const renderRightActions = (id: number) => {
     return (
-      <View style={{ display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: COLORS.PRIMARY }}>
-        <TouchableOpacity onPress={() => DeleteItem(item_id)}>
+      <View style={S.rightActionsContainer}>
+        <TouchableOpacity onPress={() => DeleteTrip(id)}>
           <DeleteIcon width="32" height="32" />
         </TouchableOpacity>
       </View>
     );
-  };
+  }
 
   return (
-    <View style={{ alignItems: "center", marginTop: 5, backgroundColor: COLORS.PRIMARY, flex: 1 }}>
+    <View style={S.tripsContainer}>
+
       {TripData.map((item: any) =>
         <TouchableOpacity
           key={item.id}
           onPress={() => navigation.navigate("View Trip Journeys", {
             origin: item.origin, destination: item.destination
-          })}
-          onLongPress={() => console.log("Test")}
-          style={{ backgroundColor: COLORS.PRIMARY, flexGrow: 1 }}
-        >
+          })}>
 
-          <Swipeable leftThreshold={50} overshootRight={false} renderRightActions={() => renderRightActions(item.id)} containerStyle={{ height: 85, justifyContent: "center", width: 370, alignItems: "center" }}>
+          <Swipeable
+            leftThreshold={50}
+            overshootRight={false}
+            renderRightActions={() => renderRightActions(item.id)}
+            containerStyle={S.swipeableContainer}>
+            
             <Neumorphic
               width={335}
               height={60}
               background={COLORS.PRIMARY}
-              radius={10}
-            >
+              radius={10}>
 
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-
                 <View style={{ alignItems: "center", width: 64 }}>
                   <LightRailIcon width={42} height={42} />
                 </View>
 
                 <View style={{ width: 215 }}>
-                  <Text
-                    style={[STYLES.subtitle, { color: "black", marginBottom: 1 }]}
-                  >
+                  <Text style={[STYLES.subtitle, { color: "black", marginBottom: 1 }]}>
                     {item.origin} to {item.destination}
                   </Text>
                   <DisabilityRating rating={item.disabilityRating} />
@@ -124,9 +98,9 @@ const Trips: FC<Props> = ({ navigation, pinned }) => {
                 <View style={{ alignItems: "center", width: 56 }}>
                   <ChevronForwardIcon />
                 </View>
-
               </View>
             </Neumorphic>
+
           </Swipeable>
         </TouchableOpacity>
       )}
@@ -136,3 +110,24 @@ const Trips: FC<Props> = ({ navigation, pinned }) => {
 }
 
 export default Trips;
+
+const S = StyleSheet.create({
+  rightActionsContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: COLORS.PRIMARY
+  },
+  swipeableContainer: {
+    height: 85,
+    justifyContent: "center",
+    width: 370,
+    alignItems: "center"
+  },
+  tripsContainer: {
+    alignItems: "center",
+    marginTop: 5,
+    backgroundColor: COLORS.PRIMARY,
+    flex: 1
+  }
+});

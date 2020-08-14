@@ -9,7 +9,7 @@ import {
   Text
 } from "react-native";
 
-import { 
+import {
   Neumorphic
 } from "_common_components";
 
@@ -19,6 +19,7 @@ import {
 
 import TransportLogo from "_icons/logo.svg";
 import CloseIcon from "_icons/close.svg";
+import Dialog from "react-native-dialog";
 
 interface SignupScreenProps {
   navigation: any,
@@ -26,112 +27,168 @@ interface SignupScreenProps {
 
 const SignupScreen: FC<SignupScreenProps> =
   ({ navigation }) => {
-  
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [location, setLocation] = useState("");
-  const [valid, setValid] = useState(true);
 
-  // Check signup form
-  function HandleRequest(): void {
-    let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    // Check for invalid email or passwords don"t match
-    if ((regex.test(email) === false)) {
-        setValid(false);
-       
-    } else {
-      setValid(true);
+    const [errorDialog, setErrorDialog] = useState(false);
+    const [email, setEmail] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [username, setUsername] = useState("");
+    const [usernameError, setUsernameError] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [location, setLocation] = useState("");
+    const [locationError, setLocationError] = useState("");
+
+    const CheckEmailError = () => {
+      const regex = RegExp(/^[a-zA-Z0-9_\.]+@[a-zA-Z\.]*/);
+      const match = regex.test(email);
+      if (!match) setEmailError("Invalid email.");
+      else setEmailError("");
     }
-    
-  }
 
-  return (
-      <View style={[S.darkOverlay, {flex: 1}]}>
-      <View style={[S.positioningContainer,  {flexGrow: 1}]}>
-      <KeyboardAvoidingView keyboardVerticalOffset= {-100}
-        behavior="position">
-      <View style={S.centeredModal}>
-      
-          <View style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: 20}}>
-            <TransportLogo width={220} height={60} />
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <CloseIcon style={{marginTop: 12.5}} />
-            </TouchableOpacity>
-          </View>
-          
-          <View style={{marginTop: 15, marginBottom: 15}}>
-            <View style={{width: 270, marginBottom: 25}}>
-              <Text style={S.title}>Welcome aboard.</Text>
+    const CheckPasswordError = () => {
+      const regex = RegExp(/[A-Z]/);
+      const containsUppercase = regex.test(password);
+      if (password !== confirmPassword) {
+        setPasswordError("Passwords do not match.");
+      } else if (password.length < 10) {
+        setPasswordError("Password must be at least 10 characters long.");
+      } else if (!containsUppercase) {
+        setPasswordError("Password must contain an uppercase letter.");
+      } else {
+        setPasswordError("");
+      }
+    }
+
+    const CheckUsernameError = () => {
+      const regex = RegExp(/^\w+$/);
+      const match = regex.test(username);
+      if (!match) setUsernameError("Invalid username.");
+      else setUsernameError("");
+    }
+
+    const CheckLocationError = () => {
+      const regex = RegExp(/^\w+$/);
+      const match = regex.test(location);
+      if (!match) setLocationError("Invalid location.");
+      else setLocationError("");
+    }
+
+    const HandleSignUp = () => {
+      if (emailError != "" || usernameError != "" || passwordError != "" || locationError != "") {
+        setErrorDialog(true);
+        return;
+      }
+
+      navigation.navigate("Dashboard");
+    }
+
+    return (
+      <View style={[S.darkOverlay, { flex: 1 }]}>
+        <View style={[S.positioningContainer, { flexGrow: 1 }]}>
+          <KeyboardAvoidingView keyboardVerticalOffset={-100}
+            behavior="position">
+            <View style={S.centeredModal}>
+
+              <View style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginBottom: 20
+              }}>
+                <TransportLogo width={220} height={60} />
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <CloseIcon style={{ marginTop: 12.5 }} />
+                </TouchableOpacity>
+              </View>
+
+              <View style={{ marginTop: 15, marginBottom: 15 }}>
+                <View style={{ width: 270, marginBottom: 25 }}>
+                  <Text style={S.title}>Welcome aboard.</Text>
+                </View>
+
+                <Text style={S.subtitle}> Email </Text>
+                <TextInput
+                  style={S.textbox}
+                  value={email}
+                  onChangeText={(text) => setEmail(text)}
+                  placeholder="e.g. janecitizen@goodcitizen.com"
+                  onBlur={CheckEmailError} />
+                {emailError != "" ? <Text style={{ color: "red" }}>{emailError}</Text> : null}
+
+                <Text style={S.subtitle}> Username </Text>
+                <TextInput
+                  style={S.textbox}
+                  value={username}
+                  onChangeText={(text) => setUsername(text)}
+                  placeholder="e.g. janecitizen"
+                  onBlur={CheckUsernameError}
+                  maxLength={15} />
+                {usernameError != "" ? <Text style={{ color: "red" }}>{usernameError}</Text> : null}
+
+                <Text style={S.subtitle}> Password </Text>
+                <TextInput
+                  secureTextEntry={true}
+                  style={S.textbox}
+                  value={password}
+                  onChangeText={(text) => setPassword(text)}
+                  textContentType="password"
+                  placeholder="*************" 
+                  maxLength={25} />
+
+                <Text style={S.subtitle}> Confirm password </Text>
+                <TextInput
+                  secureTextEntry={true}
+                  style={S.textbox}
+                  value={confirmPassword}
+                  onChangeText={(text) => setConfirmPassword(text)}
+                  textContentType="password"
+                  placeholder="*************"
+                  onBlur={CheckPasswordError}
+                  maxLength={25} />
+                {passwordError != "" ? <Text style={{ color: "red" }}>{passwordError}</Text> : null}
+
+                <Text style={S.subtitle}> Location </Text>
+                <TextInput
+                  style={S.textbox}
+                  value={location}
+                  onChangeText={(text) => setLocation(text)}
+                  placeholder="e.g. Sydney, NSW"
+                  onBlur={CheckLocationError}
+                  maxLength={25} />
+                {locationError != "" ? <Text style={{ color: "red" }}>{locationError}</Text> : null}
+              </View>
+
+              <View style={{ alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() => HandleSignUp()}>
+                  <Neumorphic
+                    width={280}
+                    height={50}
+                    radius={500}
+                    background={COLORS.ACCENT}
+                    centered>
+                    <Text style={S.btnText}>Join</Text>
+                  </Neumorphic>
+                </TouchableOpacity>
+              </View>
+
+              <View>
+                <Dialog.Container visible={errorDialog}>
+                  <Dialog.Title>Ensure Correct Input</Dialog.Title>
+                  <Dialog.Description>Please check your input.</Dialog.Description>
+                  <Dialog.Button label="okay" onPress={() => setErrorDialog(false)} />
+                </Dialog.Container>
+              </View>
+
+
             </View>
-
-            <Text style={S.subtitle}> Email </Text>
-            <TextInput
-              style={S.textbox}
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-              placeholder="e.g. janecitizen@goodcitizen.com" />
-
-            <Text style={S.subtitle}> Username </Text>
-            <TextInput
-              style={S.textbox}
-              value={username}
-              onChangeText={(text) => setUsername(text)}
-              placeholder="e.g. janecitizen" />
-
-            <Text style={S.subtitle}> Password </Text>
-            <TextInput
-              secureTextEntry={true}
-              style={S.textbox}
-              value={password}
-              onChangeText={(text) => setPassword(text)}
-              textContentType="password"
-              placeholder="*************" />
-
-            <Text style={S.subtitle}> Confirm password </Text>
-            <TextInput
-              secureTextEntry={true}
-              style={S.textbox}
-              value={confirmPassword}
-              onChangeText={(text) => setConfirmPassword(text)}
-              textContentType="password"
-              placeholder="*************" />
-
-            <Text style={S.subtitle}> Location </Text>
-            <TextInput
-              style={S.textbox}
-              value={location}
-              onChangeText={(text) => setLocation(text)}
-              placeholder="e.g. Sydney, NSW" />
-          </View>
-
-          <View style={{alignItems: "center"}}>
-            <TouchableOpacity
-              onPress={() => {HandleRequest;
-                             valid ? navigation.goBack() : null;}}>
-              <Neumorphic
-                width={280}
-                height={50}
-                radius={500}
-                background={COLORS.ACCENT}
-                centered>
-                <Text style={S.btnText}>Join</Text>
-              </Neumorphic>          
-            </TouchableOpacity>
+          </KeyboardAvoidingView>
         </View>
-        
       </View>
-      </KeyboardAvoidingView>
-      </View>
-      </View>
-  );
+    );
 
-}
+  }
 
 export default SignupScreen;
 

@@ -29,12 +29,12 @@ interface MessageProps {
 }
 
 const Message: FC<MessageProps> = ({ message, mine }) => {
-  
+
   if (mine) {
 
     return (
-      <View style={{maxWidth: "60%", padding: 10, backgroundColor: COLORS.SLATER_GRAY, borderRadius: 10}}>
-        <Text style={{color: "white", fontFamily: "Arial Rounded MT Bold"}}>{message}</Text>
+      <View style={{ maxWidth: "60%", padding: 10, backgroundColor: COLORS.SLATER_GRAY, borderRadius: 10 }}>
+        <Text style={{ color: "white", fontFamily: "Arial Rounded MT Bold" }}>{message}</Text>
       </View>
     );
 
@@ -42,8 +42,8 @@ const Message: FC<MessageProps> = ({ message, mine }) => {
   } else {
 
     return (
-      <View style={{maxWidth: "60%", padding: 10, backgroundColor: COLORS.SLATER_GRAY, borderRadius: 10}}>
-        <Text style={{color: "white", fontFamily: "Arial Rounded MT Bold"}}>{message}</Text>
+      <View style={{ maxWidth: "60%", padding: 10, backgroundColor: COLORS.SLATER_GRAY, borderRadius: 10 }}>
+        <Text style={{ color: "white", fontFamily: "Arial Rounded MT Bold" }}>{message}</Text>
       </View>
     );
 
@@ -53,7 +53,7 @@ const Message: FC<MessageProps> = ({ message, mine }) => {
 
 const ViewChat: FC<ChatProps> = ({ navigation,
   route }) => {
-  
+
   const { icon, id } = route.params;
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState(HelpMessages);
@@ -68,37 +68,37 @@ const ViewChat: FC<ChatProps> = ({ navigation,
   function SendMessage() {
     if (message.length <= 0) return;
     const r = [...messages];
-    r.push({id: MyID, message: message});
+    r.push({ id: MyID, message: message });
     setMessages(r);
     setMessage("");
   }
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <ChatHeader icon={icon} />
 
       <KeyboardAvoidingView
-        style={{position: "absolute", left: 0, right: 0, bottom: 0}}
+        style={{ position: "absolute", left: 0, right: 0, bottom: 0 }}
         keyboardVerticalOffset={91}
         behavior="position">
-        
-        <ScrollView contentContainerStyle={{flexGrow: 1}}>
-          {messages.map((message, index) =>
-            { 
-              if (message.id === MyID)
-                return ( 
-                  <View style={{alignItems: "flex-end", marginBottom: 10, marginRight: 10}}> 
-                    <Message message={message.message} mine /> 
-                  </View>
-                );
-              else
-                  return (
-                    <View style={{
-                      marginBottom: 10, marginLeft: 10}}> 
-                      <Message message={message.message} />
-                    </View>
-                  );
-            }
+
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          {messages.map((message, index) => {
+            if (message.id === MyID)
+              return (
+                <View style={{ alignItems: "flex-end", marginBottom: 10, marginRight: 10 }}>
+                  <Message message={message.message} mine />
+                </View>
+              );
+            else
+              return (
+                <View style={{
+                  marginBottom: 10, marginLeft: 10
+                }}>
+                  <Message message={message.message} />
+                </View>
+              );
+          }
           )}
         </ScrollView>
 
@@ -110,7 +110,7 @@ const ViewChat: FC<ChatProps> = ({ navigation,
             onChangeText={(text) => setMessage(text)}
             placeholderTextColor={COLORS.GRAY2}
             autoFocus
-            />
+          />
 
           <TouchableOpacity
             onPress={() => SendMessage()}>
@@ -149,6 +149,7 @@ const BugReportMessages = [
   { id: 1234, message: "Cross platform cloud saves aren't working on my phone." },
   { id: -1, message: "That's strange -- can you provide us with more details e.g. which device you are using, the specific issue and when it occurs. Thanks!" },
 ];
+
 const S = StyleSheet.create({
   container: {
     backgroundColor: COLORS.SLATER_GRAY,

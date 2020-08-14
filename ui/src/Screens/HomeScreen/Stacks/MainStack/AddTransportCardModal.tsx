@@ -24,29 +24,26 @@ import {
   COLORS
 } from "_constants";
 
-import MastercardIcon from "_icons/mastercard.svg";
-import VisaIcon from "_icons/visa.svg";
+import OpalAdultIcon from "_images/opal-adult.svg";
+import OpalConcessionIcon from "_images/opal-concession.svg";
 import CloseIcon from "_icons/close.svg";
-
 import Dialog from "react-native-dialog";
 
-interface AddPaymentMethodProps {
+interface AddTransportCardModalProps {
   visibility: boolean,
   setVisibility: Function
 };
 
-const AddPaymentMethod: FC<AddPaymentMethodProps> =
+const AddTransportCardModal: FC<AddTransportCardModalProps> =
   ({ visibility, setVisibility }) => {
 
-    const [errorDialog, setErrorDialog] = useState(false);
     const [cardNumber, setCardNumber] = useState("");
     const [cardNumberError, setCardNumberError] = useState("");
-    const [expiryDate, setExpiryDate] = useState("");
-    const [expiryDateError, setExpiryDateError] = useState("");
-    const [cardName, setCardName] = useState("");
-    const [cardNameError, setCardNameError] = useState("");
-    const [CVVNumber, setCVVNumber] = useState("");
-    const [CVVNumberError, setCVVNumberError] = useState("");
+    const [securityCode, setSecurityCode] = useState("");
+    const [securityCodeError, setSecurityCodeError] = useState("");
+    const [nickname, setNickname] = useState("");
+    const [nicknameError, setNicknameError] = useState("");
+    const [errorDialog, setErrorDialog] = useState(false);
 
     const CheckCardNumberError = () => {
       const regex = RegExp(/^\d{16}$/);
@@ -55,49 +52,37 @@ const AddPaymentMethod: FC<AddPaymentMethodProps> =
       else setCardNumberError("");
     }
 
-    const CheckExpiryDateError = () => {
-      const regex = RegExp(/^\d{4}$/);
-      var match = regex.test(expiryDate);
-      const month = parseInt(expiryDate.slice(0, 2));
-      const year = parseInt(expiryDate.slice(2, 4));
-      if (month > 12 || month < 1) match = false;
-      else if (year < parseInt(new Date().getFullYear().toString().slice(2, 4))) match = false;
-      if (!match) setExpiryDateError("Invalid expiry date.");
-      else setExpiryDateError("");
-    }
-
-    const CheckCardNameError = () => {
-      const regex = RegExp(/^\w+/);
-      const match = regex.test(cardName);
-      if (!match) setCardNameError("Invalid name.");
-      else setCardNameError("");
-    }
-
-    const CheckCVVNumberError = () => {
+    const CheckSecurityCodeError = () => {
       const regex = RegExp(/^\d{3}$/);
-      const match = regex.test(CVVNumber);
-      if (!match) setCVVNumberError("Invalid CVV number.");
-      else setCVVNumberError("");
+      const match = regex.test(securityCode);
+      if (!match) setSecurityCodeError("Invalid security code.");
+      else setSecurityCodeError("");
     }
 
-    const HandleAddPaymentMethod = () => {
+    const CheckNicknameError = () => {
+      const regex = RegExp(/^[a-zA-Z]+( [a-zA-Z]+)?$/);
+      const match = regex.test(nickname);
+      if (!match) setNicknameError("Invalid nickname.");
+      else setNicknameError("");
+    }
 
-      if (cardNumberError != "" || expiryDateError != "" || cardNameError != "" || CVVNumberError != "") {
+    const HandleAddCard = () => {
+
+      if (cardNumberError != "" || securityCodeError != "" || nicknameError != "") {
         setErrorDialog(true);
         return;
       }
 
-      GetData("@payment_methods")
+      GetData("@transport_cards")
         .then((res: any) => {
           var cards = [...res];
-          cards.push({ id: cards.length, type: "mastercard", cardNumber: cardNumber.slice(cardNumber.length - 4) });
-          StoreData("@payment_methods", cards);
+          cards.push({ id: cards.length, owner: nickname, type: "adult", balance: 10.00, autoTopup: false, blocked: false });
+          StoreData("@transport_cards", cards);
         });
 
       setCardNumber("");
-      setExpiryDate("");
-      setCardName("");
-      setCVVNumber("");
+      setSecurityCode("");
+      setNickname("");
       setVisibility(false);
     }
 
@@ -110,16 +95,16 @@ const AddPaymentMethod: FC<AddPaymentMethodProps> =
 
         <View style={[S.darkOverlay, { flex: 1 }]}>
           <View style={[S.positioningContainer, { flexGrow: 1 }]}>
+
             <KeyboardAvoidingView
               behavior="padding">
               <View style={S.bottomModal}>
 
                 <ScrollView contentContainerStyle={{ alignItems: "center" }}>
-
                   <View style={{ flexDirection: "row", marginTop: 15 }}>
                     <View style={{ flexDirection: "row", alignItems: "center", width: 110 }}>
-                      <MastercardIcon style={{ marginRight: 15 }} />
-                      <VisaIcon style={{ marginRight: 100 }} />
+                      <OpalAdultIcon style={{ marginRight: 15 }} />
+                      <OpalConcessionIcon style={{ marginRight: 60 }} />
                       <TouchableOpacity
                         onPress={() => setVisibility(false)}>
                         <CloseIcon />
@@ -138,52 +123,38 @@ const AddPaymentMethod: FC<AddPaymentMethodProps> =
                       maxLength={16}
                       onBlur={CheckCardNumberError}
                     />
-                    {cardNumberError != "" ? <Text style={{ color: "red" }}>{cardNumberError}</Text> : null}
+                    {cardNumberError != "" ? <Text style={{color: "red"}}>{cardNumberError}</Text> : null}
                   </View>
 
                   <View style={{ marginTop: 15 }}>
-                    <Text style={S.title}> Expiry Date </Text>
+                    <Text style={S.title}> Security Code </Text>
                     <TextInput
                       style={[S.textbox, S.subtitle]}
-                      value={expiryDate}
-                      onChangeText={text => setExpiryDate(text)}
-                      keyboardType="number-pad"
-                      placeholder="e.g. 12/22"
-                      maxLength={4}
-                      onBlur={CheckExpiryDateError}
-                    />
-                    {expiryDateError != "" ? <Text style={{ color: "red" }}>{expiryDateError}</Text> : null}
-                  </View>
-
-                  <View style={{ marginTop: 15 }}>
-                    <Text style={S.title}> Name on Card </Text>
-                    <TextInput
-                      style={[S.textbox, S.subtitle]}
-                      value={cardName}
-                      onChangeText={text => setCardName(text)}
-                      placeholder="e.g. Jane Citizen"
-                      maxLength={25}
-                      onBlur={CheckCardNameError}
-                    />
-                    {cardNameError != "" ? <Text style={{ color: "red" }}>{cardNameError}</Text> : null}
-                  </View>
-
-                  <View style={{ marginTop: 15 }}>
-                    <Text style={S.title}> CVV Number </Text>
-                    <TextInput
-                      style={[S.textbox, S.subtitle]}
-                      value={CVVNumber}
-                      onChangeText={text => setCVVNumber(text)}
+                      value={securityCode}
+                      onChangeText={text => setSecurityCode(text)}
                       keyboardType="number-pad"
                       placeholder="e.g. 413"
                       maxLength={3}
-                      onBlur={CheckCVVNumberError}
+                      onBlur={CheckSecurityCodeError}
                     />
-                    {CVVNumberError != "" ? <Text style={{ color: "red" }}>{CVVNumberError}</Text> : null}
+                    {securityCodeError != "" ? <Text style={{ color: "red" }}>{securityCodeError}</Text> : null}
+                  </View>
+
+                  <View style={{ marginTop: 15 }}>
+                    <Text style={S.title}> Nickname </Text>
+                    <TextInput
+                      style={[S.textbox, S.subtitle]}
+                      value={nickname}
+                      onChangeText={text => setNickname(text)}
+                      placeholder="e.g. Jane Citizen"
+                      maxLength={25}
+                      onBlur={CheckNicknameError}
+                    />
+                    {nicknameError != "" ? <Text style={{ color: "red" }}>{nicknameError}</Text> : null}
                   </View>
 
                   <TouchableOpacity
-                    onPress={() => HandleAddPaymentMethod()}
+                    onPress={() => HandleAddCard()}
                     style={{ marginTop: 25 }}>
                     <Neumorphic
                       width={280}
@@ -213,7 +184,7 @@ const AddPaymentMethod: FC<AddPaymentMethodProps> =
     );
   }
 
-export default AddPaymentMethod;
+export default AddTransportCardModal;
 
 const S = StyleSheet.create({
   darkOverlay: {
@@ -228,7 +199,7 @@ const S = StyleSheet.create({
   bottomModal: {
     backgroundColor: COLORS.PRIMARY,
     width: 413,
-    height: 525,
+    height: 430,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30
   },

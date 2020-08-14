@@ -26,6 +26,7 @@ module.exports = function (api) {
             '_common_components': './src/Components',
             '_screens': './src/Screens',
             '_constants': './src/Constants',
+            '_utils': './src/Utils'
           },
         },
       ],

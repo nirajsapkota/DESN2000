@@ -19,6 +19,7 @@
       "_common_components": ["./src/Components"],
       "_screens": ["./src/Screens"],
       "_constants": ["./src/Constants"],
+      "_utils" : ["./src/Utils"]
     }
   },
   "exclude": [
