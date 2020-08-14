@@ -12,16 +12,22 @@ import {
 } from "react-native";
 
 import {
-  Neumorphic, 
+  Neumorphic,
   Header
 } from "../../../../Components";
 
 import {
   COLORS,
   STYLES
-} from "_constants"
+} from "_constants";
+
+import {
+  StoreData,
+  GetData
+} from "_utils";
 
 import ChevronForwardIcon from "_icons/chevron-forward.svg";
+import { exp } from "react-native-reanimated";
 
 interface AddNewTripConfirmProps {
   route: any,
@@ -35,140 +41,125 @@ const AddNewTripConfirm: FC<AddNewTripConfirmProps> = ({ navigation, route }) =>
   const [pinTrip, setPinTrip] = useState(false);
   const [tripNotifications, setTripNotifications] = useState(false);
   const [temporaryTrip, setTemporaryTrip] = useState(false);
-  //if temp and pinned?
-  const tripKey  = pinTrip ? "@pinned_trips" : "@unpinned_trips";
-  //  { id: 2, method: "LR", disabilityRating: "POOR", origin: "UNSW Anzac Parade", destination: "Haymarket"}
-
-  const SaveTrip = async (key: string, value: Array<any>) => {
-    try {
-      const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem(key, jsonValue);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-  
-  const addTrip = async (key:string) => {
-    try {
-      const jsonValue = await AsyncStorage.getItem(key)
-      //gets a string
-      const trips =  jsonValue != null ? JSON.parse(jsonValue) : null;
-      var id = Object.keys(trips).length;
-      // console.log(trips);
-      if (trips){
-        //assume it is a JSONArray
-        trips.push({id: id, method: "LR", disabilityRating: "OK", origin:origin.name, destination:destination.name});
-      } 
-      // console.log(trips);
-
-      return trips;
-    } catch(err) {
-      console.log(err);
-    }
-  }
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <Header navigation={navigation} />
 
       <ScrollView contentContainerStyle={STYLES.container}>
-        <View style={STYLES.container}>
 
-          {/* Origin Station */}
-          <Text style={STYLES.title}> Add a New Trip </Text>
+        {/* Origin Station */}
+        <Text style={STYLES.title}> Add a New Trip </Text>
 
-          <Text style={[STYLES.subtitle, {marginTop: 15}]}> From </Text> 
-          <TouchableOpacity onPress={() => console.log("nothing yet")}>
-            <Neumorphic width={375} height={55} background={COLORS.PRIMARY}
-              radius={10} style={{marginTop: 15}} >
-              <View style={[STYLES.row, {alignItems: "center"}]}>
-                
-                <View style={{left: 20, width: 345}}>
-                  <Text style={S.title}> {origin.name} </Text>
-                  <Text style={S.subtitle}> {origin.suburb} </Text>
-                </View>
+        <Text style={[STYLES.subtitle, { marginTop: 15 }]}> From </Text>
+        <TouchableOpacity
+          onPress={() => console.log("nothing yet")}>
 
-                <View>
-                  <ChevronForwardIcon />
-                </View>
-              
+          <Neumorphic
+            width={375}
+            height={55}
+            background={COLORS.PRIMARY}
+            radius={10}
+            style={{ marginTop: 15 }} >
+
+            <View style={[STYLES.row, { alignItems: "center" }]}>
+              <View style={{ left: 20, width: 345 }}>
+                <Text style={S.title}> {origin.name} </Text>
+                <Text style={S.subtitle}> {origin.suburb} </Text>
               </View>
-            </Neumorphic>
-          </TouchableOpacity>
 
-          {/* Destination Station */}
-          <Text style={[STYLES.subtitle, {marginTop: 15}]}> To </Text> 
-          <TouchableOpacity onPress={() => console.log("nothing yet")}>
-            <Neumorphic width={375} height={55} background={COLORS.PRIMARY}
-              radius={10} style={{marginTop: 15}} >
-              <View style={[STYLES.row, {alignItems: "center"}]}>
-
-                <View style={{left: 20, width: 345}}>
-                  <Text style={S.title}> {destination.name} </Text>
-                  <Text style={S.subtitle}> {destination.suburb} </Text>
-                </View>
-
-                <View>
-                  <ChevronForwardIcon />
-                </View>
+              <View>
+                <ChevronForwardIcon />
               </View>
-            
-            </Neumorphic>
-          </TouchableOpacity>
+            </View>
+          </Neumorphic>
+        </TouchableOpacity>
 
-          {/* Options */}
-          <View style={{marginTop: 25}}>
-            <View style={[STYLES.row, {alignItems: "center", justifyContent: "space-between", marginTop: 15}]}>
-              <Text style={[STYLES.subtitle, {color: "black"}]}> Pin trip </Text>
-              <Switch
-                onValueChange={() => setPinTrip(!pinTrip)}
-                value={pinTrip}
-              />
-            </View>
-            <View style={[STYLES.row, {alignItems: "center", justifyContent: "space-between", marginTop: 15}]}>
-              <Text style={[STYLES.subtitle, {color: "black"}]}> Notifications for delays and cancellations </Text>
-              <Switch
-                onValueChange={() => setTripNotifications(!tripNotifications)}
-                value={tripNotifications}
-              />
-            </View>
-            <View style={[STYLES.row, {alignItems: "center", justifyContent: "space-between", marginTop: 15}]}>
-              <Text style={[STYLES.subtitle, {color: "black"}]}> Temporary </Text>
-              <Switch
-                onValueChange={() => setTemporaryTrip(!temporaryTrip)}
-                value={temporaryTrip}
-              />
-            </View>
-          </View>
-  
-          {/* Finish */}
-          <View style={{alignItems: "center", marginTop: 25}}>
-            <TouchableOpacity onPress={() => {
-              if(temporaryTrip){
-                navigation.navigate("View Trip Journeys", {
-                  origin: origin.name.replace(" Light Rail", ""), destination: destination.name.replace(" Light Rail", "")
-                })
-                console.log("Temp trip")
-                return;
-              }
-              addTrip(tripKey)
-              .then(response => 
-                SaveTrip(tripKey,response)
-              ).then(response => 
-                navigation.navigate("View Trip Journeys", {
-                  origin: origin.name.replace(" Light Rail", ""), destination: destination.name.replace(" Light Rail", "")
-                })
-              );
-            }
-            }>
-              <Neumorphic width={280} height={50} background={COLORS.ACCENT}
-                radius={500} centered >
-                  <Text style={[STYLES.subtitle, {color: "white"}]}> Finish </Text>
-              </Neumorphic>
-            </TouchableOpacity>
-          </View>
+        {/* Destination Station */}
+        <Text style={[STYLES.subtitle, { marginTop: 15 }]}> To </Text>
+        <TouchableOpacity
+          onPress={() => console.log("nothing yet")}>
 
+          <Neumorphic
+            width={375}
+            height={55}
+            background={COLORS.PRIMARY}
+            radius={10}
+            style={{ marginTop: 15 }}>
+
+            <View style={[STYLES.row, { alignItems: "center" }]}>
+              <View style={{ left: 20, width: 345 }}>
+                <Text style={S.title}> {destination.name} </Text>
+                <Text style={S.subtitle}> {destination.suburb} </Text>
+              </View>
+
+              <View>
+                <ChevronForwardIcon />
+              </View>
+            </View>
+          </Neumorphic>
+        </TouchableOpacity>
+
+        {/* Options */}
+        <View style={{ marginTop: 25 }}>
+          <View style={S.row}>
+            <Text style={[STYLES.subtitle, { color: "black" }]}> Pin trip </Text>
+            <Switch
+              onValueChange={() => setPinTrip(!pinTrip)}
+              value={pinTrip} />
+          </View>
+          <View style={S.row}>
+            <Text style={[STYLES.subtitle, { color: "black" }]}> Notifications for delays and cancellations </Text>
+            <Switch
+              onValueChange={() => setTripNotifications(!tripNotifications)}
+              value={tripNotifications} />
+          </View>
+          <View style={S.row}>
+            <Text style={[STYLES.subtitle, { color: "black" }]}> Temporary </Text>
+            <Switch
+              onValueChange={() => setTemporaryTrip(!temporaryTrip)}
+              value={temporaryTrip} />
+          </View>
         </View>
+
+        {/* Finish */}
+        <View style={{ alignItems: "center", marginTop: 25 }}>
+          <TouchableOpacity onPress={() => {
+            if (temporaryTrip) {
+              navigation.navigate("View Trip Journeys", {
+                origin: origin.name.replace(" Light Rail", ""), destination: destination.name.replace(" Light Rail", "")
+              })
+            } else {
+              if (pinTrip) {
+                GetData("@pinned_trips")
+                  .then((res: any) => {
+                    var NewPinnedTrips = [...res];
+                    NewPinnedTrips.push({id: NewPinnedTrips.length, method: "LR", disabilityRating: "GOOD", origin: origin.name, destination: destination.name});
+                    StoreData("@pinned_trips", NewPinnedTrips);
+                    navigation.navigate("View Trip Journeys", {
+                      origin: origin.name.replace(" Light Rail", ""), destination: destination.name.replace(" Light Rail", "")
+                    })
+                  })
+              } else {
+                GetData("@unpinned_trips")
+                  .then((res: any) => {
+                    var NewUnpinnedTrips = [...res];
+                    NewUnpinnedTrips.push({id: NewUnpinnedTrips.length, method: "LR", disabilityRating: "GOOD", origin: origin.name, destination: destination.name});
+                    StoreData("@unpinned_trips", NewUnpinnedTrips);
+                    navigation.navigate("View Trip Journeys", {
+                      origin: origin.name.replace(" Light Rail", ""), destination: destination.name.replace(" Light Rail", "")
+                    })
+                  })
+              }
+            }
+          }}>
+            <Neumorphic width={280} height={50} background={COLORS.ACCENT}
+              radius={500} centered >
+              <Text style={[STYLES.subtitle, { color: "white" }]}> Finish </Text>
+            </Neumorphic>
+          </TouchableOpacity>
+        </View>
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -195,20 +186,27 @@ const S = StyleSheet.create({
     fontFamily: "Arial Rounded MT Bold",
     fontSize: 14,
     color: COLORS.GRAY
+  },
+  row: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 15
   }
 });
 
 const stops = [
-  { id: 0,  name: "Dulwich Hill Light Rail", suburb: "Dulwich Hill" },
-  { id: 1,  name: "Dulwich Grove Light Rail", suburb: "Dulwich Hill" },
-  { id: 2,  name: "Arlington Light Rail", suburb: "Dulwich Hill" },
-  { id: 3,  name: "Waratah Mills Light Rail", suburb: "Dulwich Hill" },
-  { id: 4,  name: "Lewisham West Light Rail", suburb: "Lewisham" },
-  { id: 5,  name: "Taverners Hill Light Rail", suburb: "Leichhardt" },
-  { id: 6,  name: "Marion Light Rail", suburb: "Leichhardt" },
-  { id: 7,  name: "Hawthorne Light Rail", suburb: "Leichhardt" },
-  { id: 8,  name: "Leichhardt North Light Rail", suburb: "Leichhardt" },
-  { id: 9,  name: "Lilyfield Light Rail", suburb: "Lilyfield" },
+  { id: 0, name: "Dulwich Hill Light Rail", suburb: "Dulwich Hill" },
+  { id: 1, name: "Dulwich Grove Light Rail", suburb: "Dulwich Hill" },
+  { id: 2, name: "Arlington Light Rail", suburb: "Dulwich Hill" },
+  { id: 3, name: "Waratah Mills Light Rail", suburb: "Dulwich Hill" },
+  { id: 4, name: "Lewisham West Light Rail", suburb: "Lewisham" },
+  { id: 5, name: "Taverners Hill Light Rail", suburb: "Leichhardt" },
+  { id: 6, name: "Marion Light Rail", suburb: "Leichhardt" },
+  { id: 7, name: "Hawthorne Light Rail", suburb: "Leichhardt" },
+  { id: 8, name: "Leichhardt North Light Rail", suburb: "Leichhardt" },
+  { id: 9, name: "Lilyfield Light Rail", suburb: "Lilyfield" },
   { id: 10, name: "Rozelle Bay Light Rail", suburb: "Annandale" },
   { id: 11, name: "Jubilee Park Light Rail", suburb: "Glebe" },
   { id: 12, name: "Glebe Light Rail", suburb: "Glebe" },

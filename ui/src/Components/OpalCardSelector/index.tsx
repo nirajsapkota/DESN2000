@@ -36,10 +36,12 @@ import DeleteIcon from "_icons/delete.svg";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
 interface OpalCardSelectorProps {
-  navigation: any
+  navigation: any,
+  getActiveCardBalance: Function,
+  getActiveCardNickname: Function
 }
 
-const OpalCardSelector: FC<OpalCardSelectorProps> = ({ navigation }) => {
+const OpalCardSelector: FC<OpalCardSelectorProps> = ({ navigation, getActiveCardBalance, getActiveCardNickname }) => {
 
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState([]);
@@ -49,6 +51,7 @@ const OpalCardSelector: FC<OpalCardSelectorProps> = ({ navigation }) => {
     const NewCards = cards.filter((card: any) => card.id != id);
     StoreData("@transport_cards", NewCards);
     setCards(NewCards);
+    console.log(NewCards);
   }
 
   const renderRightActions = (id: number) => {
@@ -67,9 +70,11 @@ const OpalCardSelector: FC<OpalCardSelectorProps> = ({ navigation }) => {
         if (res !== null && res.length > 0) {
           setCards(res);
           setSelectedCard(res[0]);
+          getActiveCardBalance(res[0].balance);
+          getActiveCardNickname(res[0].owner)
         }
       });
-  }, [])
+  }, [modalVisisble])
 
   return (
     <View style={{ marginTop: 15, alignItems: "center" }}>

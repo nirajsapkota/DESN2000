@@ -103,7 +103,7 @@ const ActivityGraph: FC<ActivityGraphProps> = ({graphType}) => {
     //TODO: fix X-axis on browser
     return (
         <View>
-            <View style={{flexDirection:'row',transform:[{rotate:'270-deg'},{translateX:-20},{translateY:-140}]}}>
+            <View style={{flexDirection:'row',transform:[{rotate:'270-deg'},{translateX:24},{translateY:-190}]}}>
                 <Text>
                     Amount Spent (AUD)
                 </Text>
